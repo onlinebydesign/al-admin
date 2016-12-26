@@ -1,0 +1,19 @@
+<h1>
+  {{title}}
+</h1>
+
+<!--Test Accordion-->
+<accordion [closeOthers]="false">
+  <accordion-group heading="Dynamic Body Content">
+    <p>The body of the accordion group grows to fit the contents</p>
+    <div *ngFor="let item of items">{{item}}</div>
+  </accordion-group>
+  <accordion-group #group>
+    <div accordion-heading>
+        I can have markup, too!
+        <i class="pull-right float-xs-right glyphicon"
+           [ngClass]="{'glyphicon-chevron-down': group?._isOpen, 'glyphicon-chevron-right': !group?._isOpen}"></i>
+    </div>
+    This is just some content to illustrate fancy headings.
+  </accordion-group>
+</accordion>
