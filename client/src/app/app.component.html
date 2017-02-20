@@ -1,19 +1,51 @@
-<h1>
-  {{title}}
-</h1>
-
-<!--Test Accordion-->
-<accordion [closeOthers]="false">
-  <accordion-group heading="Dynamic Body Content">
-    <p>The body of the accordion group grows to fit the contents</p>
-    <div *ngFor="let item of items">{{item}}</div>
-  </accordion-group>
-  <accordion-group #group>
-    <div accordion-heading>
-        I can have markup, too!
-        <i class="pull-right float-xs-right glyphicon"
-           [ngClass]="{'glyphicon-chevron-down': group?._isOpen, 'glyphicon-chevron-right': !group?._isOpen}"></i>
+<div class="container-fluid fill">
+  <div class="row fill">
+    <!--Nav Column-->
+    <div class="bg-primary col-sm-4 col-md-3 col-lg-2 fill">
+      <div class="page-header header">
+        <h1>LOGO</h1>
+      </div>      
+      
+      <!--Test Accordion-->
+      <accordion>
+        <accordion-group heading="Dynamic Body Content">
+          <p>The body of the accordion group grows to fit the contents</p>
+          <div *ngFor="let item of items">{{item}}</div>
+        </accordion-group>
+        <accordion-group #group>
+          <div accordion-heading>
+              I can have markup, too!
+              <i class="pull-right float-xs-right glyphicon"
+                [ngClass]="{'glyphicon-chevron-down': group?._isOpen, 'glyphicon-chevron-right': !group?._isOpen}"></i>
+          </div>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+      </accordion>
     </div>
-    This is just some content to illustrate fancy headings.
-  </accordion-group>
-</accordion>
+
+    <div class="bg-default col-sm-8 col-md-9 col-lg-10 fill">
+      <div class="page-header header">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+        <span dropdown class="pull-right">
+          <a href dropdownToggle id="user-menu">
+            John Doe
+          </a>
+          <ul class="dropdown-menu" dropdownMenu aria-lableledby="user-menu">
+            <li>
+              <a href>Profile</a>
+            </li>
+            <hr>
+            <li>
+              <a href>Logout</a>
+          </ul>
+        </span>
+      </div>
+      <div class="page-header">
+        <h2>Title</h2>
+      </div>
+      <div>
+        Whatever
+      </div>
+    </div>
+  </div>
+</div>
