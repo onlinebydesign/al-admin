@@ -35,3 +35,16 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+.idea/
+
+*.csv
+*.dat
+*.out
+*.sublime-*
+*.swo
+*.swp
+*.tgz
+.DS_Store
+.project
+.strong-pm
+npm-debug.log
