@@ -8,17 +8,14 @@
       
       <!--Test Accordion-->
       <accordion>
-        <accordion-group heading="Dynamic Body Content">
-          <p>The body of the accordion group grows to fit the contents</p>
-          <div *ngFor="let item of items">{{item}}</div>
-        </accordion-group>
-        <accordion-group #group>
-          <div accordion-heading>
-              I can have markup, too!
-              <i class="pull-right float-xs-right glyphicon"
-                [ngClass]="{'glyphicon-chevron-down': group?._isOpen, 'glyphicon-chevron-right': !group?._isOpen}"></i>
-          </div>
-          This is just some content to illustrate fancy headings.
+        <button type="button" class="btn btn-default" routerLink="/" routerLinkActive="active">
+          Home
+        </button>
+        <accordion-group heading="Users">
+          <ul>
+            <li><a routerLink="/users" routerLinkActive="active">List</a></li>
+            <li><a routerLink="/users/add" routerLinkActive="active">Add</a></li>
+          </ul>
         </accordion-group>
       </accordion>
     </div>
@@ -40,12 +37,8 @@
           </ul>
         </span>
       </div>
-      <div class="page-header">
-        <h2>Title</h2>
-      </div>
-      <div>
-        Whatever
-      </div>
+      <!-- Router output is rendered here. -->
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
