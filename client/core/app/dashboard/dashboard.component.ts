@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-var Foo = require('@angular/core').Component;
 
 import { Router } from '@angular/router';
 
@@ -7,7 +6,6 @@ import { Router } from '@angular/router';
   templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent {
-  public foo = Component;
 
   constructor( ) { }
 

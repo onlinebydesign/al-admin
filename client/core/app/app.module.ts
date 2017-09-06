@@ -17,6 +17,9 @@ import { AppRoutingModule } from './app.routing';
 
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { UserService } from "./shared/user.service";
+
 
 @NgModule({
   imports: [
@@ -32,12 +35,13 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective
+    AsideToggleDirective,
+    ListUsersComponent
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  }, UserService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
