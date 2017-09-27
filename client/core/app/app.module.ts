@@ -1,25 +1,60 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
+import {AppComponent} from './app.component';
 
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
-import { AsideToggleDirective } from './shared/aside.directive';
-import { BreadcrumbsComponent } from './shared/breadcrumb.component';
+// Import containers
+import {
+  FullLayout,
+  SimpleLayout
+} from './containers';
 
-// Routing Module
-import { AppRoutingModule } from './app.routing';
+const APP_CONTAINERS = [
+  FullLayout,
+  SimpleLayout
+];
 
-// Layouts
-import { FullLayoutComponent } from './layouts/full-layout.component';
-import { ListUsersComponent } from './list-users/list-users.component';
-import { UserService } from "./shared/user.service";
+// Import components
+import {
+  AppAside,
+  AppBreadcrumbs,
+  AppFooter,
+  AppHeader,
+  AppSidebar
+} from './components';
 
+const APP_COMPONENTS = [
+  AppAside,
+  AppBreadcrumbs,
+  AppFooter,
+  AppHeader,
+  AppSidebar
+];
+
+// Import directives
+import {
+  AsideToggleDirective,
+  NAV_DROPDOWN_DIRECTIVES,
+  SIDEBAR_TOGGLE_DIRECTIVES
+} from './directives';
+
+const APP_DIRECTIVES = [
+  AsideToggleDirective,
+  NAV_DROPDOWN_DIRECTIVES,
+  SIDEBAR_TOGGLE_DIRECTIVES
+];
+
+// Import routing module
+import {AppRoutingModule} from './app.routing';
+
+// Import 3rd party components
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {TabsModule} from 'ngx-bootstrap/tabs';
+import {ChartsModule} from 'ng2-charts/ng2-charts';
+import {AuthService} from './users/auth.service';
 
 @NgModule({
   imports: [
@@ -27,21 +62,24 @@ import { UserService } from "./shared/user.service";
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    HttpModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
-    FullLayoutComponent,
-    NAV_DROPDOWN_DIRECTIVES,
-    BreadcrumbsComponent,
-    SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective,
-    ListUsersComponent
+    ...APP_CONTAINERS,
+    ...APP_COMPONENTS,
+    ...APP_DIRECTIVES
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }, UserService],
-  bootstrap: [ AppComponent ]
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: PathLocationStrategy
+    },
+    AuthService
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
