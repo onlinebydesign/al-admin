@@ -5,7 +5,7 @@ import {AuthService} from '../../users/auth.service';
   selector: 'app-header',
   templateUrl: './app-header.component.html'
 })
-export class AppHeader implements OnInit {
+export class AppHeaderComponent implements OnInit {
 
   // public disabled = false;
   // public status: {isopen: boolean} = {isopen: false};

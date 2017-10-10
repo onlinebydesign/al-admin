@@ -22,7 +22,7 @@ import {
   AppAside,
   AppBreadcrumbs,
   AppFooter,
-  AppHeader,
+  AppHeaderComponent,
   AppSidebar
 } from './components';
 
@@ -30,7 +30,7 @@ const APP_COMPONENTS = [
   AppAside,
   AppBreadcrumbs,
   AppFooter,
-  AppHeader,
+  AppHeaderComponent,
   AppSidebar
 ];
 
