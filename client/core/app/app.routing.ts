@@ -22,7 +22,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'users',
-        loadChildren: './views/users/users.module#UsersModule'
+        loadChildren: './users/users.module#UsersModule'
       },
       {
         path: 'dashboard',

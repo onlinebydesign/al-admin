@@ -1,0 +1,198 @@
+<al-search-list #sl [service]="orders" [queryFilter]="queryFilter">
+    <div pre-defined-buttons class="btn-group mb-3" role="group" aria-label="Predefined Searches">
+        <button type="button" class="btn btn-secondary">Incomplete (No-Send)</button>
+        <button type="button" class="btn btn-secondary">Last 30 Days</button>
+        <button type="button" class="btn btn-secondary">All Pending</button>
+        <button type="button" class="btn btn-secondary">Department Pending</button>
+        <button type="button" class="btn btn-secondary">Unprocessed</button>
+        <button type="button" class="btn btn-secondary">Late</button>
+    </div>
+    <div search-filter class="card card-inverse card-info text-xs-center">
+        <div class="card-block">
+            <div class="card-title">
+                <i class="fa fa-database"></i> &nbsp;Select Data
+            </div>
+            <div class="row align-items-end">
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <label>Status Filter</label>
+                        <ss-multiselect-dropdown [options]="statusOptions" [settings]="multiSelectSettings" [(ngModel)]="queryFilter.where.and[0].status.inq"></ss-multiselect-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <label for="ssn">SSN</label>
+                        <input class="form-control" id="ssn" type="text" [(ngModel)]="queryFilter.where.and[1].ssn">
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <label for="dob">DOB</label>
+                        <input class="form-control" id="dob" type="date" [(ngModel)]="queryFilter.where.and[2].dob">
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <label for="orderId">Order Id</label>
+                        <input class="form-control" id="orderId" type="text" [(ngModel)]="queryFilter.where.and[3].id">
+                    </div>
+                </div>
+
+                <div class="col-md-9 col-lg-6">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="from">From</label>
+                                <input class="form-control" id="from" type="date" [(ngModel)]="queryFilter.where.and[4].created.between[0]">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="to">To</label>
+                                <input class="form-control" id="to" type="date" [(ngModel)]="queryFilter.where.and[4].created.between[1]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-2 text-center text-md-right mb-md-3">
+                    <button class="btn btn-success" (click)="sl.loadData()">
+                        <i class="fa fa-upload"></i>
+                        &nbsp;Load Data
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="pull-left"></div>
+                <i class="fa fa-filter"></i>Table Filters
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="form-group col-sm-12">
+                            <label for="state">State</label>
+                            <select class="form-control" id="state">
+                            <option>Idaho</option>
+                            <option>Arizona</option>
+                            <option>California</option>
+                            <option>Oregon</option>
+                            <option>New York</option>
+                            <option>Montana</option>
+                            <option>Nevada</option>
+                            <option>West Virginia</option>
+                            <option>Ohio</option>
+                        </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="county">Counties</label>
+                            <select class="form-control" id="county">
+                            <option>Ada</option>
+                            <option>Bella</option>
+                            <option>Bonner</option>
+                            <option>Latah</option>
+                            <option>Elmore</option>
+                            <option>Cassia</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group col-sm-12">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-outline-danger btn-light" [ngClass]="{'btn-primary' : tableFilter.hit}" (click)="tableFilter.hit = !tableFilter.hit">Hit
+                            </button>
+                                <button type="button" class="btn btn-outline-secondary btn-light" [ngClass]="{'btn-primary' : tableFilter.clear}" (click)="tableFilter.clear = !tableFilter.clear">Clear
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group col-sm-12">
+                            <label>Relation Filter Type</label>
+                            <ss-multiselect-dropdown [options]="relationOptions" [settings]="singleSelectSettings" [(ngModel)]="tableFilter.relationType"
+                                (ngModelChange)="relationChanged($event)"></ss-multiselect-dropdown>
+                        </div>
+
+                        <div class="form-group col-sm-12" *ngIf="relationsOptions.length">
+                            <label>Select {{tableFilter.relationType[0]}}s</label>
+                            <ss-multiselect-dropdown [options]="relationsOptions" [settings]="multiSelectSearchSettings" [(ngModel)]="tableFilter.relations"></ss-multiselect-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div results-table class="card">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i> Results Table
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive table-hover table-outline mb-0">
+                <thead>
+                    <tr>
+                        <th (click)="sl.toggleSort('client_code')">
+                            Client Code 
+                            <span [ngClass]="sl.getSortIconClasses('client_code')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('client_order_num')">
+                            Client Request Num
+                            <span [ngClass]="sl.getSortIconClasses('client_order_num')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('status')">
+                            Status
+                            <span [ngClass]="sl.getSortIconClasses('status')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('ssn')">
+                            SSN
+                            <span [ngClass]="sl.getSortIconClasses('ssn')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('dob')">
+                            DOB
+                            <span [ngClass]="sl.getSortIconClasses('dob')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('years_scope')">
+                            Year Scope
+                            <span [ngClass]="sl.getSortIconClasses('years_scope')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('client_notes')">
+                            Client Notes
+                            <span [ngClass]="sl.getSortIconClasses('client_notes')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('case_notes')">
+                            Case Notes
+                            <span [ngClass]="sl.getSortIconClasses('case_notes')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('county')">
+                            County
+                            <span [ngClass]="sl.getSortIconClasses('county')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('state')">
+                            State
+                            <span [ngClass]="sl.getSortIconClasses('state')"></span>
+                        </th>
+                        <th (click)="sl.toggleSort('case_copies')">
+                            Case Copies
+                            <span [ngClass]="sl.getSortIconClasses('case_copies')"></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of sl.tableData">
+                        <td>{{order.client_code}}</td>
+                        <td>{{order.client_order_num}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.ssn}}</td>
+                        <td>{{order.dob | date:'shortDate'}}</td>
+                        <td>{{order.years_scope}}</td>
+                        <td>{{order.client_notes}}</td>
+                        <td>{{order.case_notes}}</td>
+                        <td>{{order.county}}</td>
+                        <td>{{order.state}}</td>
+                        <td>{{order.case_copies}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</al-search-list>

@@ -1,49 +1,45 @@
-<ui-message>
-  <div class="input-group mb-1">
-    <span class="input-group-addon">
-      <i class="icon-user"></i>
-    </span>
-    <input [(ngModel)]="credentials.email"
-      required type="text" class="form-control" placeholder="Email">
-  </div>
-  <div class="input-group mb-1">
-    <span class="input-group-addon">
-      <i class="icon-user"></i>
-    </span>
-    <input [(ngModel)]="credentials.firstName"
-      required type="text" class="form-control" placeholder="First name">
-  </div>
-  <div class="input-group mb-1">
-    <span class="input-group-addon">
-      <i class="icon-user"></i>
-    </span>
-    <input [(ngModel)]="credentials.lastName"
-      required type="text" class="form-control" placeholder="Last name">
-  </div>
-  <div class="input-group mb-1">
-    <span class="input-group-addon">
-      <i class="icon-lock"></i>
-    </span>
-    <input [(ngModel)]="credentials.password"
-      required type="password" class="form-control" placeholder="Password">
-  </div>
-  <div class="input-group mb-1">
-    <span class="input-group-addon">
-      <i class="icon-lock"></i>
-    </span>
-    <input [(ngModel)]="credentials.confirm"
-      required type="password" class="form-control" placeholder="Confirm password">
-  </div>
-  <div class="row">
-    <div class="col-xs-6 text-xs-left">
-      <button type="submit" class="btn btn-primary px-2" (click)="register()">
-        Register
-      </button>
-    </div>
-    <div class="col-xs-6 text-xs-right">
-      <a class="btn btn-outline-primary px-2" [routerLink]="['/', 'login']">
-        Sign in
-      </a>
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mx-4">
+          <div class="card-body p-4">
+            <h1>Register</h1>
+            <p class="text-muted">Create your account</p>
+            <div class="input-group mb-3">
+              <span class="input-group-addon"><i class="icon-user"></i></span>
+              <input type="text" class="form-control" placeholder="Username">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-addon">@</span>
+              <input type="text" class="form-control" placeholder="Email">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-addon"><i class="icon-lock"></i></span>
+              <input type="password" class="form-control" placeholder="Password">
+            </div>
+
+            <div class="input-group mb-4">
+              <span class="input-group-addon"><i class="icon-lock"></i></span>
+              <input type="password" class="form-control" placeholder="Repeat password">
+            </div>
+
+            <button type="button" class="btn btn-block btn-success">Create Account</button>
+          </div>
+          <div class="card-footer p-4">
+            <div class="row">
+              <div class="col-6">
+                <button class="btn btn-block btn-facebook" type="button"><span>facebook</span></button>
+              </div>
+              <div class="col-6">
+                <button class="btn btn-block btn-twitter" type="button"><span>twitter</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</ui-message>
+</div>

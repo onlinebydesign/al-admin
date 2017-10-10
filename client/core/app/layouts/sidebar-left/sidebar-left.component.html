@@ -1,0 +1,11 @@
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      <li *ngFor="let route of router.config">
+        <span class="nav-item" *ngIf="route.path && route.data">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/' . route.path ]"><i class="icon-speedometer"></i> {{route.data.title}} <span class="badge badge-info">NEW</span></a>
+        </span>
+      </li>
+    </ul>
+  </nav>
+</div>

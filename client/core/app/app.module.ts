@@ -54,7 +54,9 @@ import {AppRoutingModule} from './app.routing';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
+
 import {AuthService} from './users/auth.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
@@ -64,7 +66,8 @@ import {AuthService} from './users/auth.service';
     TabsModule.forRoot(),
     ChartsModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [
     AppComponent,
