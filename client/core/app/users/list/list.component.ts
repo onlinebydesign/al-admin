@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Query } from "../../core/query.class";
+import { LoopbackQuery } from "../../core/query.class";
 import { UsersService } from "../users.service";
 
 @Component({
@@ -8,7 +8,7 @@ import { UsersService } from "../users.service";
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  public queryFilter: Query = new Query({
+  public queryFilter: LoopbackQuery = new LoopbackQuery({
     where: {
       and: [
         {

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import * as Collection from 'ampersand-rest-collection';
 import * as _ from 'lodash';
-
-import { Query } from './../../core/query.class';
 
 @Component({
   selector: 'al-search-list',
@@ -10,30 +10,30 @@ import { Query } from './../../core/query.class';
 })
 export class SearchListComponent implements OnInit {
 
-  @Input() public service: any;
-  @Input() public queryFilter: Query;
-
-  // Optional
+  @Input() public serviceObservable: Observable<any[]>;
+  @Input() public rowCount: number;
   @Input() public tableData: any[] = [];
   @Input() public limit: number = 10;
   @Input() public sortColumn: string = 'id';
-  // Sort order should be 'asc' or 'desc'.
   @Input() public sortReverse: boolean = true;
+
+  @Output() public updateParameters = new EventEmitter<any>();
 
   public currentPage: number = 1;
   public pages: number[] = [];
-  
+
+  private data: any[] = [];
+
   public constructor() {
   }
 
   public ngOnInit(): void {
-    this.service.on('sync', (collection, resp, options) => {
-      this.resetPagination();
-    });   
-  }
-
-  public loadData() {
-    this.service.fetch(this.queryFilter);
+    if (this.serviceObservable) {
+      this.serviceObservable.subscribe((data) => {
+        this.data = data;
+        this.reset();
+      });
+    }
   }
 
   public isPreviousPage(): boolean {
@@ -45,28 +45,24 @@ export class SearchListComponent implements OnInit {
   }
 
   public firstPage() {
-    this.currentPage = 1;
-    this.refreshtableData();
+    this.setPage(1);
   }
 
   public previousPage() {
-    this.currentPage -= 1;
-    this.refreshtableData();
+    this.setPage(this.currentPage - 1);
   }
 
   public setPage(newPageNumber: number) {
     this.currentPage = newPageNumber;
-    this.refreshtableData();
+    this.refresh();
   }
 
   public nextPage() {
-    this.currentPage += 1;
-    this.refreshtableData();
+    this.setPage(this.currentPage + 1);
   }
 
   public lastPage() {
-    this.currentPage = this.pages.length;
-    this.refreshtableData();
+    this.setPage(this.pages.length);
   }
 
   // Change sort and update table data.
@@ -87,7 +83,7 @@ export class SearchListComponent implements OnInit {
     // Set sort column before ending
     this.sortColumn = column;
 
-    this.refreshtableData();
+    this.refresh();
   }
 
   // These classes are for indicating the sort order and column in the table.
@@ -101,12 +97,15 @@ export class SearchListComponent implements OnInit {
     return '';
   }
 
+  private getRowCount() {
+    return this.rowCount || this.data.length;
+  }
   // Creates an array from 1 to the number of pages for pagination.
   // This is necissary because ngFor uses arrays not counts.
   private createPagesArray() {
     this.pages.length = 0;
     let i = 1;
-    const pagesLength = Math.ceil(this.service.models.length / this.limit);
+    const pagesLength = Math.ceil(this.getRowCount() / this.limit);
     while (i <= pagesLength) {
       this.pages.push(i);
       i += 1;
@@ -114,18 +113,26 @@ export class SearchListComponent implements OnInit {
   }
 
   // Updates pagination to the new data length.
-  private resetPagination() {
+  private reset() {
     this.currentPage = 1;
     this.createPagesArray();
-    this.refreshtableData();
+    this.refresh();
   }
 
   // Updates the order and pagination
-  private refreshtableData() {
-    this.tableData = _.chain(this.service.models)
-                        .orderBy(this.sortColumn, this.getSortOrder())
-                        .slice(this.getOffset(), this.getOffset() + this.limit)
-                        .value();
+  private refresh() {
+    if (this.rowCount) {
+      this.updateParameters.emit({
+        limit: this.limit,
+        order: this.sortColumn + ' ' + this.getSortOrder(),
+        skip: this.getOffset()
+      });
+    } else {
+      this.tableData = _.chain(this.data)
+      .orderBy(this.sortColumn, this.getSortOrder())
+      .slice(this.getOffset(), this.getOffset() + this.limit)
+      .value();
+    }
   }
 
   private getOffset(): number {

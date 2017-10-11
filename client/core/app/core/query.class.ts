@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-export interface Filter {
+export interface LoopbackFilter {
   where?: any,
   limit?: number,
   skip?: number,
@@ -9,10 +9,10 @@ export interface Filter {
   include?: any
 }
 
-export class Query implements Filter {
+export class LoopbackQuery implements LoopbackFilter {
   public where;
 
-  constructor(filter?: Filter) {
+  constructor(filter?: LoopbackFilter) {
     if (filter) {
       _.extend(this, filter);
     } else {
@@ -22,7 +22,7 @@ export class Query implements Filter {
 
   //TODO: MAke the filter format simpler to understand and convert to what loopback expects here.
   // Recursively filter out the empty property filters
-  public formatQueryFilter(node?: Filter) {
+  public format(node?: LoopbackFilter) {
     if (!node) {
       node = this;
     }
