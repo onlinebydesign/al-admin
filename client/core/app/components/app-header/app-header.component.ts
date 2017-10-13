@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../users/auth.service';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ export class AppHeaderComponent implements OnInit {
   //   $event.stopPropagation();
   //   this.status.isopen = !this.status.isopen;
   // }
-  private user;
+  public user = {};
 
   constructor(private authService: AuthService) {
 
@@ -27,6 +27,5 @@ export class AppHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.user$.subscribe(x => this.user = x);
-    this.user = this.authService.user;
   }
 }

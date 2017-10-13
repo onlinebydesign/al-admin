@@ -42,11 +42,11 @@
   },
   "files": {
     "loopback#static": {
-      "params": "$!../public"
+      "params": "$!../client/dist"
     }
   },
   "final": {
-    "loopback#urlNotFound": {}
+    "./middleware/url-not-found-handler": {}
   },
   "final:after": {
     "strong-error-handler": {}

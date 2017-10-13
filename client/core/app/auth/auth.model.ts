@@ -1,9 +1,10 @@
 import * as Model from 'ampersand-model';
 
 export const UserModel = Model.extend({
-  urlRoot: '/api/Users',
+  url: 'http://localhost:3000/api/Users/1?access_token=' + localStorage.getItem('accessToken'),
   props: {
     id: 'number',
+    name: 'string',
     email: 'string'
   },
   extraProperties: 'allow'
@@ -12,11 +13,12 @@ export const UserModel = Model.extend({
 
 export class User {
   id: number;
+  name: string;
   email: string;
-  password?: string;
 }
 
 export const EmptyUser: User = {
   id: 0,
+  name: '',
   email: ''
 };

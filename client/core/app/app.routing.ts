@@ -58,6 +58,19 @@ export const routes: Routes = [
         loadChildren: './views/pages/pages.module#PagesModule',
       }
     ]
+  },
+  {
+    path: 'auth',
+    component: SimpleLayout,
+    data: {
+      title: 'Authentication'
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: './auth/auth.module#AuthModule'
+      },
+    ]
   }
 ];
 

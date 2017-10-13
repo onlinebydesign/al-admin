@@ -54,9 +54,10 @@ import {AppRoutingModule} from './app.routing';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
-import {AuthService} from './users/auth.service';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   imports: [
@@ -67,7 +68,9 @@ import { SharedModule } from './shared/shared.module';
     ChartsModule,
     HttpModule,
     HttpClientModule,
-    SharedModule
+    FlashMessagesModule,
+    SharedModule,
+    CoreModule
   ],
   declarations: [
     AppComponent,
@@ -79,8 +82,7 @@ import { SharedModule } from './shared/shared.module';
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy
-    },
-    AuthService
+    }
   ],
   bootstrap: [AppComponent]
 })
