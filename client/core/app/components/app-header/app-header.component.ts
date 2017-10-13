@@ -28,4 +28,5 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user$.subscribe(x => this.user = x);
   }
+
 }

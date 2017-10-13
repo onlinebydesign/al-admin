@@ -54,10 +54,11 @@ export class AuthService {
         .subscribe((res: string) => {
         localStorage.setItem('accessToken', JSON.stringify(res));
 
-        this.setAccessToken();
-        this.router.navigate([this.redirectUrl]);
+        this.setAccessToken().subscribe(() => {
+          this.router.navigate([this.redirectUrl]);
+        });
       }, err => {
-        this.flashMessageService.show(err.message);
+        this.flashMessageService.show(err.message, { cssClass: 'alert-danger' });
       });
     }
   }
@@ -66,8 +67,11 @@ export class AuthService {
     delete this.user;
     localStorage.removeItem('accessToken');
 
-    this.router.navigate([this.loginUrl]);
-    this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-success' });
+    this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-info', timeout: 2500 });
+
+    setTimeout(() => {
+      this.router.navigate([this.loginUrl]);     
+    }, 2750);
   }
 
   public register(email: string, password: string, passwordConfirm: string) {
@@ -78,7 +82,6 @@ export class AuthService {
     this.user = new UserModel({email: email, password: password});
     this.user.save(null, {
       success: () => {
-        this.userSubject.next(this.user);
         this.flashMessageService.show(
           'User successfully created you will be redirected to login!', 
           { cssClass: 'alert-success', timeout: 2500 }
@@ -87,10 +90,10 @@ export class AuthService {
         // Wait for the flash message to disappear before re-routing to the login page.
         setTimeout(() => {
           this.router.navigate([this.loginUrl]);
-        }, 2500);
+        }, 2750);
       },
       error: (model, res) => {
-        this.flashMessageService.show(res.body.error.message);
+        this.flashMessageService.show(res.body.error.message, { cssClass: 'alert-danger' });
       }
     });
   }
@@ -107,9 +110,9 @@ export class AuthService {
   /**
    * Take the access token from localStorage and attach the token and user id to the user.
    * 
-   * @returns {boolean}
+   * @returns {Observable<User>}
    */
-  private setAccessToken(): boolean {
+  private setAccessToken(): Observable<User> {
     this.accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
     // If there is an accessToken then load the user
@@ -128,11 +131,9 @@ export class AuthService {
 
       // After loading the access token and setting up the user we can get the user.
       this.get();
-
-      return true;
     }
 
-    return false;
+    return this.user$;
   }
   /**
    * Fetches the user and returns the user observable
@@ -143,13 +144,12 @@ export class AuthService {
     this.user.fetch({
       success: () => {
         this.userSubject.next(this.user);
-        this.flashMessageService.show('You have successfully logged in!', { cssClass: 'alert-success', timeout: 1000 });
       },
       error: (model, res) => {
         //TODO: Figure out what body isn't parsed.
         res.body = JSON.parse(res.body);
         if (this.flashMessageService.show) {
-          this.flashMessageService.show(res.body.error.message, { timeout: 2500 });
+          this.flashMessageService.show(res.body.error.message, { cssClass: 'alert-danger', timeout: 2500 });
         }
         setTimeout(() => {
           this.logout();          
