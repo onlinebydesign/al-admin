@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
-import { Router } from "@angular/router";
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Http, Headers, Response } from '@angular/http';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 import { EmptyUser, User, UserModel } from '../users/user.model';
@@ -28,8 +28,8 @@ export class AuthService {
   public loginUrl = '/auth/login';
 
   constructor(
-    private http: HttpClient, 
-    private router: Router, 
+    private http: Http,
+    private router: Router,
     private flashMessageService: FlashMessagesService
   ) {
     this.userSubject = new BehaviorSubject<User>(EmptyUser);
@@ -49,29 +49,34 @@ export class AuthService {
 
     // If email and password are provided then login
     if (email && password) {
-      // First attempt to login as an employee
       this.http.post('api/users/login', { email: email, password: password })
-        .subscribe((res: string) => {
+        .subscribe((res: Response) => {
         localStorage.setItem('accessToken', JSON.stringify(res));
 
         this.setAccessToken().subscribe(() => {
           this.router.navigate([this.redirectUrl]);
         });
       }, err => {
-        this.flashMessageService.show(err.message, { cssClass: 'alert-danger' });
+        this.flashMessageService.show('Incorrect username or password', { cssClass: 'alert-danger', timeout: 5000 });
       });
+    } else {
+      this.flashMessageService.show('Please enter a username and password', { cssClass: 'alert-danger' });
     }
   }
 
   public logout(): void {
-    delete this.user;
-    localStorage.removeItem('accessToken');
+    this.http.post('api/users/logout', {},
+      {headers: new Headers({'Authorization': JSON.parse(localStorage.getItem('accessToken')).id})})
+    .subscribe((res: Response) => {
+      delete this.user;
+      localStorage.removeItem('accessToken');
 
-    this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-info', timeout: 2500 });
+      this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-info', timeout: 2500 });
 
-    setTimeout(() => {
-      this.router.navigate([this.loginUrl]);     
-    }, 2750);
+      setTimeout(() => {
+        this.router.navigate([this.loginUrl]);
+      }, 2750);
+    });
   }
 
   public register(email: string, password: string, passwordConfirm: string) {
@@ -83,7 +88,7 @@ export class AuthService {
     this.user.save(null, {
       success: () => {
         this.flashMessageService.show(
-          'User successfully created you will be redirected to login!', 
+          'User successfully created you will be redirected to login!',
           { cssClass: 'alert-success', timeout: 2500 }
         );
 
@@ -100,7 +105,7 @@ export class AuthService {
 
   /**
    * Checks to see if the user is logged in.
-   * 
+   *
    * @returns {boolean}
    */
   public isLoggedIn(): boolean {
@@ -109,7 +114,7 @@ export class AuthService {
 
   /**
    * Take the access token from localStorage and attach the token and user id to the user.
-   * 
+   *
    * @returns {Observable<User>}
    */
   private setAccessToken(): Observable<User> {
@@ -146,13 +151,13 @@ export class AuthService {
         this.userSubject.next(this.user);
       },
       error: (model, res) => {
-        //TODO: Figure out what body isn't parsed.
+        // TODO: Figure out what body isn't parsed.
         res.body = JSON.parse(res.body);
         if (this.flashMessageService.show) {
           this.flashMessageService.show(res.body.error.message, { cssClass: 'alert-danger', timeout: 2500 });
         }
         setTimeout(() => {
-          this.logout();          
+          this.logout();
         }, 2500);
       }
     });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoopbackQuery } from "../../core/query.class";
-import { UsersService } from "../users.service";
+import { LoopbackQuery } from '../../core/query.class';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-list',
@@ -30,10 +30,11 @@ export class ListComponent implements OnInit {
     skip: 0,
     fields: {},
   });
-  
+
   constructor(public usersService: UsersService) { }
 
   ngOnInit() {
+    this.usersService.fetch();
   }
 
 }

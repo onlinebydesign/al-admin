@@ -20,7 +20,7 @@ export class LoopbackQuery implements LoopbackFilter {
     }
   }
 
-  //TODO: MAke the filter format simpler to understand and convert to what loopback expects here.
+  // TODO: MAke the filter format simpler to understand and convert to what loopback expects here.
   // Recursively filter out the empty property filters
   public format(node?: LoopbackFilter) {
     if (!node) {
@@ -43,7 +43,7 @@ export class LoopbackQuery implements LoopbackFilter {
         }
       });
 
-      //Remove all empty properties in this node
+      // Remove all empty properties in this node
       return _.omitBy(node, (value, key) => {
         if (_.isBoolean(value)) return false;
         if (_.isNumber(value)) return false;
