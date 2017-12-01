@@ -67,22 +67,18 @@ export class AuthService {
   public logout(): void {
     this.http.post('api/users/logout', {},
       {headers: new Headers({'Authorization': JSON.parse(localStorage.getItem('accessToken')).id})})
-    .subscribe((res: Response) => {
-      delete this.user;
-      localStorage.removeItem('accessToken');
-
-      this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-info', timeout: 2500 });
-
-      setTimeout(() => {
-        this.router.navigate([this.loginUrl]);
-      }, 2750);
-    });
+    .subscribe((res: Response) => this.unsetAccessToken());
   }
 
   public register(email: string, password: string, passwordConfirm: string) {
     if (password !== passwordConfirm) {
       return this.flashMessageService.show('Passwords must match!');
     }
+
+    this.flashMessageService.show(
+      'Creating new user',
+      { cssClass: 'alert-info', timeout: 2500 }
+    );
 
     this.user = new UserModel({email: email, password: password});
     this.user.save(null, {
@@ -110,6 +106,21 @@ export class AuthService {
    */
   public isLoggedIn(): boolean {
     return !!this.accessToken;
+  }
+
+  public recover(email: string) {
+  // We always give the same reply regardless of the results from the server.
+  this.http.post('api/users/reset',
+    {email: email})
+  .subscribe(res => this.recoverReply(res), res => this.recoverReply(res));
+  }
+
+  private recoverReply(res: Response) {
+    this.flashMessageService.show('Your request has been submitted an email should arrive shortly!', { cssClass: 'alert-info', timeout: 2500 });
+
+    setTimeout(() => {
+      this.router.navigate([this.loginUrl]);
+    }, 2750);
   }
 
   /**
@@ -140,6 +151,22 @@ export class AuthService {
 
     return this.user$;
   }
+
+  /**
+   * Remove the access token from local storage and remove user.
+   *
+   * @returns {Observable<User>}
+   */
+  private unsetAccessToken(): void {
+    this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-info', timeout: 2500 });
+    
+    delete this.user;
+    localStorage.removeItem('accessToken');
+    setTimeout(() => {
+      this.router.navigate([this.loginUrl]);
+    }, 2750);
+  }
+
   /**
    * Fetches the user and returns the user observable
    *
@@ -157,7 +184,7 @@ export class AuthService {
           this.flashMessageService.show(res.body.error.message, { cssClass: 'alert-danger', timeout: 2500 });
         }
         setTimeout(() => {
-          this.logout();
+          this.unsetAccessToken();
         }, 2500);
       }
     });

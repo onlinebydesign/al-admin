@@ -48,3 +48,5 @@ jspm_packages
 .project
 .strong-pm
 npm-debug.log
+
+server/datasources.developement.json

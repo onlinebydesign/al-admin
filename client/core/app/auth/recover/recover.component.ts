@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from '../auth.service';
+
 @Component({
   selector: 'app-recover',
   templateUrl: './recover.component.html',
@@ -7,18 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecoverComponent implements OnInit {
 
-  public user: any = {
-    email: '',
-  }
-
   constructor(
-    // private authService: AuthService,
+    private authService: AuthService,
   ) {}
+
   public ngOnInit() {
 
   }
 
-  public recover() {
-    // this.authService.recover(this.user)
+  public recover(email: string) {
+    this.authService.recover(email)
   }
 }
