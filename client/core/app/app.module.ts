@@ -68,7 +68,7 @@ import { CoreModule } from './core/core.module';
     ChartsModule,
     HttpModule,
     HttpClientModule,
-    FlashMessagesModule,
+    FlashMessagesModule.forRoot(),
     SharedModule,
     CoreModule
   ],
