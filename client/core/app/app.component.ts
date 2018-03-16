@@ -10,13 +10,13 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   private loginUrl = '/auth/login';
-  private registerUrl = '/auth/register';
+  private authUrl = '/auth/';
 
   constructor (private authService: AuthService, private router: Router) { }
-  
+
   ngOnInit() {
     // Redirect if not logged in and not on the login or register pages.
-    if ((this.router.url !== this.loginUrl || this.router.url !== this.registerUrl) && !this.authService.isLoggedIn()) {
+    if (!window.location.pathname.includes(this.authUrl) && !this.authService.isLoggedIn()) {
       this.router.navigate([this.loginUrl]);
     }
   }

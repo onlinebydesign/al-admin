@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 
@@ -9,10 +10,14 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private authService: AuthService) {
   }
 
   public ngOnInit() {
+    // Display the verified message.
+    if (this.route.snapshot.data['verified']) {
+      this.authService.verified();
+    }
   }
 
   public login(email: string, password: string) {

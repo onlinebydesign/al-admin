@@ -7,8 +7,17 @@
     "validateUpsert": true
   },
   "properties": {},
+  "restrictResetPasswordTokenScope": true,
+  "emailVerificationRequired": true,
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "accessType": "READ",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

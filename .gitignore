@@ -49,4 +49,4 @@ jspm_packages
 .strong-pm
 npm-debug.log
 
-server/datasources.developement.json
+server/datasources.development.json

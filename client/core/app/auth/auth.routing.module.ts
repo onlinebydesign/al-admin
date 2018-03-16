@@ -6,6 +6,7 @@ import { RecoverComponent } from './recover/recover.component';
 import { LogoutComponent } from './logout/logout.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,21 @@ const routes: Routes = [
       title: 'Register'
     }
   },
+  {
+    path: 'verified',
+    component: LoginComponent,
+    data: {
+      title: 'Verified',
+      verified: true
+    }
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    data: {
+      title: 'Reset Password'
+    }
+  }
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth.routing.module';
 import { AuthService } from './auth.service';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AuthService } from './auth.service';
     RegisterComponent,
     ResetComponent,
     LogoutComponent,
+    ResetPasswordComponent,
   ],
   providers: [
     AuthService
