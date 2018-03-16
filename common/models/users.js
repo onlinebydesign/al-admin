@@ -1,7 +1,7 @@
 'use strict';
 var config = require('../../server/config.json');
 var path = require('path');
-var senderAddress = "jedjs1331@gmail.com"; // This should come from an environment variable.
+var senderAddress = "noreply@obdstudios.com"; // This should come from an environment variable.
 
 module.exports = function (Users) {
   Users.on('resetPasswordRequest', function (info) {
