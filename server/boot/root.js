@@ -13,7 +13,7 @@ module.exports = function(app) {
 
   Users.findOrCreate(
     {email: 'test@obdstudios.com'},
-    {email: 'test@obdstudios.com', password: 'test', emailVerified: true},
+    {email: 'test@obdstudios.com', password: 'test', emailVerified: true, role: 'admin'},
     function (err, user, created) {
       console.log(err, user, created);
     }

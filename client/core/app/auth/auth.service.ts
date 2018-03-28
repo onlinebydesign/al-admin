@@ -146,6 +146,21 @@ export class AuthService {
     });
   }
 
+  public hasPermission(permission: string): boolean {
+    const rolePermissionTree = {
+      undefined: [],
+      '': [''],
+      'admin': ['ManageUsers']
+    };
+
+    const permissions = rolePermissionTree[this.user.role];
+    if (permissions) {
+      return permissions.includes(permission);
+    }
+
+    return false;
+  }
+
   private recoverReply(res: Response) {
     this.flashMessageService.show(
       'Your request has been submitted an email should arrive shortly!',

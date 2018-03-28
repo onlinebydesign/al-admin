@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ListComponent } from './list/list.component';
 import { UserComponent } from './user/user.component';
+import { UsersGuard } from './users.guard';
 
 const routes: Routes = [
   {
@@ -10,14 +11,16 @@ const routes: Routes = [
     component: ListComponent,
     data: {
       title: 'User List'
-    }
+    },
+    canActivate: [UsersGuard]
   },
   {
     path: ':id',
     component: UserComponent,
     data: {
       title: 'User'
-    }
+    },
+    canActivate: [UsersGuard]
   },
 ];
 

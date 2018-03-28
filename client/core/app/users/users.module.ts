@@ -8,6 +8,7 @@ import { UserComponent } from './user/user.component';
 import { UsersService } from './users.service';
 import { SharedModule } from './../shared/shared.module';
 import { UsersRoutingModule } from './users.routing.module';
+import { UsersGuard } from './users.guard';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { UsersRoutingModule } from './users.routing.module';
     UserComponent
   ],
   providers: [
-    UsersService
+    UsersService,
+    UsersGuard
   ]
 })
 export class UsersModule { }
