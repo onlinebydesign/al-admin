@@ -6,7 +6,14 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    }
+  },
   "restrictResetPasswordTokenScope": true,
   "emailVerificationRequired": true,
   "validations": [],

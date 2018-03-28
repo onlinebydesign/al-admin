@@ -1,17 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { BsDropdownModule, PopoverModule } from 'ngx-bootstrap';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
-import { SearchListComponent } from './search-list/search-list.component';
+import { AlTableComponent } from './al-table/al-table.component';
+import { AlThComponent } from './al-table/al-th.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    BsDropdownModule.forRoot(),
+    PopoverModule.forRoot(),
+    MultiselectDropdownModule,
   ],
   declarations: [
-    SearchListComponent
+    AlTableComponent,
+    AlThComponent
   ],
   exports: [
-    SearchListComponent
+    AlTableComponent,
+    AlThComponent
   ]
 })
 export class SharedModule { }

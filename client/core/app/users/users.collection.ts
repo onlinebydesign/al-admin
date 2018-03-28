@@ -1,12 +1,15 @@
-import * as _ from 'lodash';
-import { User } from './user.model';
 import * as Collection from 'ampersand-rest-collection';
+import * as _ from 'lodash';
 
+import { UserModel } from './user.model';
 
 export const UsersCollection = Collection.extend({
-    model: User,
+    model: UserModel,
     url: function() {
-        return 'api/users?filter=' + JSON.stringify(this.filter);
+        if (this.queryFilter) {
+            return 'api/users?filter=' + JSON.stringify(this.queryFilter);
+        }
+        return 'api/users';
     },
     ajaxConfig: () => {
         const accessToken = _.defaultTo(JSON.parse(localStorage.getItem('accessToken')), {});

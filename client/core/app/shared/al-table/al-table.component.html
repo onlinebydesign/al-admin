@@ -1,0 +1,79 @@
+<div class="row mb-3 d-print-none">
+  <div class="col-8">
+    <div *ngIf="actions.length" class="btn-group btn-group-sm" role="group"
+         aria-label="Button group with nested dropdown">
+      <button type="button" class="btn btn-secondary" (click)="selectAll()">Select All</button>
+      <div dropdown class="btn-group btn-group-sm  mr-2" role="group">
+        <button dropdownToggle type="button" class="btn btn-outline-secondary dropdown-toggle" aria-haspopup="true"
+                aria-expanded="false">Actions
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li *ngFor="let action of actions" role="menuitem">
+            <a class="dropdown-item btn-secondary" (click)="action.fn(); false" href="#">{{action.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <label class="col-form-label">{{(selectedCount || 'No') + (selectedCount == 1 ? ' item' : ' items')}}
+        selected</label>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="row">
+      <div class="col-4 text-right">
+        <label class="col-form-label">{{filteredData.length}} items</label>
+      </div>
+      <div class="col-8">
+        <input class="form-control form-control-sm" type="text"
+               (keyup)="setFilter('', [$event.target.value])" placeholder="Search">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col" style="overflow-x: auto; max-height: calc(100vh - 430px);">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<div class="row d-print-none">
+  <div class="col-2">
+    <select (change)="setLimit($event.target.value)"
+            [value]="limit" class="form-control form-control-sm">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+      <option value="250">250</option>
+      <option value="1000">1000</option>
+      <option value="{{Number.MAX_SAFE_INTEGER}}">All</option>
+    </select>
+    <span *ngIf="filteredData.length > limit">showing items {{getOffset() + 1}}-{{(filteredData.length < getOffset() + limit) ? filteredData.length : getOffset() + limit}} of {{filteredData.length}}</span>
+  </div>
+  <div class="col-10">
+    <ul class="pagination float-right" *ngIf="visiblePages.length > 1">
+      <li>
+        <a *ngIf="isPreviousPage()" (click)="firstPage()" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+        <a *ngIf="!isPreviousPage()" class="disabled" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li *ngFor="let pageNumber of visiblePages" [ngClass]="{'active':currentPage === pageNumber}">
+        <a (click)="setPage(pageNumber)">
+          {{pageNumber}}
+        </a>
+      </li>
+      <li>
+        <a *ngIf="isNextPage()" (click)="lastPage()" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+        <a *ngIf="!isNextPage()" class="disabled" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

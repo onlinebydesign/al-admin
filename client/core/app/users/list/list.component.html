@@ -1,82 +1,79 @@
-<al-search-list #sl [serviceObservable]="usersService.users$">
-    <div pre-defined-buttons class="btn-group mb-3" role="group" aria-label="Predefined Searches">
-        <button type="button" class="btn btn-secondary">Incomplete (No-Send)</button>
-        <button type="button" class="btn btn-secondary">Last 30 Days</button>
-        <button type="button" class="btn btn-secondary">All Pending</button>
-        <button type="button" class="btn btn-secondary">Department Pending</button>
-        <button type="button" class="btn btn-secondary">Unprocessed</button>
-        <button type="button" class="btn btn-secondary">Late</button>
-    </div>
-    <div results-table class="card">
-        <div class="card-header">
-            <i class="fa fa-align-justify"></i> Results Table
-        </div>
-        <div class="card-body">
-            <table class="table table-responsive table-hover table-outline mb-0">
-                <thead>
-                    <tr>
-                        <th (click)="sl.toggleSort('client_code')">
-                            Client Code 
-                            <span [ngClass]="sl.getSortIconClasses('client_code')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('client_order_num')">
-                            Client Request Num
-                            <span [ngClass]="sl.getSortIconClasses('client_order_num')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('status')">
-                            Status
-                            <span [ngClass]="sl.getSortIconClasses('status')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('ssn')">
-                            SSN
-                            <span [ngClass]="sl.getSortIconClasses('ssn')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('dob')">
-                            DOB
-                            <span [ngClass]="sl.getSortIconClasses('dob')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('years_scope')">
-                            Year Scope
-                            <span [ngClass]="sl.getSortIconClasses('years_scope')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('client_notes')">
-                            Client Notes
-                            <span [ngClass]="sl.getSortIconClasses('client_notes')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('case_notes')">
-                            Case Notes
-                            <span [ngClass]="sl.getSortIconClasses('case_notes')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('county')">
-                            County
-                            <span [ngClass]="sl.getSortIconClasses('county')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('state')">
-                            State
-                            <span [ngClass]="sl.getSortIconClasses('state')"></span>
-                        </th>
-                        <th (click)="sl.toggleSort('case_copies')">
-                            Case Copies
-                            <span [ngClass]="sl.getSortIconClasses('case_copies')"></span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let order of sl.tableData">
-                        <td>{{order.client_code}}</td>
-                        <td>{{order.client_order_num}}</td>
-                        <td>{{order.status}}</td>
-                        <td>{{order.ssn}}</td>
-                        <td>{{order.dob | date:'shortDate'}}</td>
-                        <td>{{order.years_scope}}</td>
-                        <td>{{order.client_notes}}</td>
-                        <td>{{order.case_notes}}</td>
-                        <td>{{order.county}}</td>
-                        <td>{{order.state}}</td>
-                        <td>{{order.case_copies}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</al-search-list>
+<div results-table class="card">
+  <div class="card-header">
+    <i class="fa fa-align-justify"></i> Results Table
+  </div>
+  <div class="card-body">
+    <button type="button" class="btn btn-primary" (click)="openModal(addUserTemplate)">Add User</button>
+    <ng-template #addUserTemplate>
+      <div class="modal-body text-center">
+        <p>Provide an email and password to create a user.</p>
+        <input type="text" class="form-control" #email placeholder="Email">
+        <input type="password" class="form-control" #password placeholder="Password">
+        <button type="button" class="btn btn-default" (click)="add(email.value, password.value)" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="cancel()" >Cancel</button>
+      </div>
+    </ng-template>
+    <al-table #tbl [data]="users" [actions]="{}" (displayedDataChanged)="updateDisplayed($event)" [searchColumns]="searchColumns">
+      <table class="table table-responsive table-hover table-outline mb-0">
+        <thead>
+          <tr>
+            <th th-sortable [table]="tbl" [prop]="'firstName'" [filter]="true" class="text-nowrap">
+              First Name
+            </th>
+            <th th-sortable [table]="tbl" [prop]="'lastName'" [filter]="true" class="text-nowrap">
+              Last Name
+            </th>
+            <th th-sortable [table]="tbl" [prop]="'email'" [filter]="true" class="text-nowrap">
+              Email
+            </th>
+            <th th-sortable [table]="tbl" [prop]="'emailVerified'" [filter]="true" class="text-nowrap">
+              Verified
+            </th>
+            <th th-sortable [table]="tbl" [prop]="'role'" [filter]="true" class="text-nowrap">
+              Role
+            </th>
+            <th class="text-nowrap">
+              <span class="btn btn-sm p-0">
+                Actions
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of displayedUsers" [ngClass]="{'table-primary': user === selected}" (click)="selected = user">
+            <td>
+              <span *ngIf="user !== selected">{{user.firstName}}</span>
+              <span *ngIf="user === selected">
+                <input [(ngModel)]="user.firstName" class="form-control">
+              </span>
+            </td>
+            <td>
+              <span *ngIf="user !== selected">{{user.lastName}}</span>
+              <span *ngIf="user === selected">
+                <input [(ngModel)]="user.lastName" class="form-control">
+              </span>
+            </td>
+            <td>
+              <span *ngIf="user !== selected">{{user.email}}</span>
+              <span *ngIf="user === selected">
+                <input [(ngModel)]="user.email" class="form-control">
+              </span>
+            </td>
+            <td>{{user.emailVerified}}</td>
+            <td>
+              <span *ngIf="user !== selected">{{user.role}}</span>
+              <span *ngIf="user === selected">
+                <input [(ngModel)]="user.role" class="form-control">
+              </span>
+            </td>
+            <td>
+              <button type="button" *ngIf="user === selected" class="btn btn-primary" (click)="save(user)">Save</button>
+              <button type="button" *ngIf="user === selected" class="btn btn-primary" (click)="removeSelection()">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="delete(user)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </al-table>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<!-- Template for the filterSort popover -->
+<ng-template #popoverTemplate>
+  <button class="btn btn-sm btn-link p-0 d-block" type="button" (click)="selectAll()">Select All</button>
+  <select class="filter-popover-select" multiple [(ngModel)]="selectedItems" (change)="setFilter()">
+    <option *ngFor="let option of getFilterStrings(prop)" value="{{option}}" title="{{option}}">{{option}}</option>
+  </select>
+</ng-template>
+
+<button class="btn btn-sm btn-link p-0" type="button" (click)="table.toggleSort(prop)">
+  <ng-content></ng-content>
+</button>
+<button *ngIf="filter" class="btn btn-sm btn-link p-0 filter" [ngClass]="{ filtered: selectedItems.length }" type="button" [popover]="popoverTemplate" container="body" popoverTitle="Filter by:" [outsideClick]="true" (onShown)="setFilter(prop)">
+  <i class="fa fa-filter" aria-hidden="true"></i>
+</button>

@@ -1,0 +1,11 @@
+:host button.filter {
+    visibility: hidden;
+}
+:host:hover button.filter, :host button.filter.filtered {
+    visibility: visible;
+}
+.filter-popover-select {
+    min-width: 150px;
+    max-width: 250px;
+    resize: vertical;
+}
