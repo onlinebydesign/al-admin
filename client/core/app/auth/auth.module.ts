@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RecoverComponent } from './recover/recover.component';
 import { RegisterComponent } from './register/register.component';
-import { ResetComponent } from './reset/reset.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth.routing.module';
@@ -23,7 +22,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoginComponent,
     RecoverComponent,
     RegisterComponent,
-    ResetComponent,
     LogoutComponent,
     ResetPasswordComponent,
   ],

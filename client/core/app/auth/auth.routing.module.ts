@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ResetComponent } from './reset/reset.component';
 import { RecoverComponent } from './recover/recover.component';
 import { LogoutComponent } from './logout/logout.component';
 import { LoginComponent } from './login/login.component';
@@ -29,13 +28,6 @@ const routes: Routes = [
     component: RecoverComponent,
     data: {
       title: 'Recover Password'
-    }
-  },
-  {
-    path: 'reset/:resetToken',
-    component: ResetComponent,
-    data: {
-      title: 'Reset Password'
     }
   },
   {

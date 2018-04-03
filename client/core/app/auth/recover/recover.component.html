@@ -7,18 +7,20 @@
             <div class="card-body">
               <h3>Lost access to your account?</h3>
               <p>Not a problem. Enter your email address to regain access.</p>
-              <div class="input-group mb-1">
-                <span class="input-group-addon"><i class="icon-user"></i></span>
-                <input #email required="true" type="text" class="form-control" placeholder="Email">
-              </div>
-              <div class="row">
-                <div class="col-xs-6 text-xs-left">
-                  <button type="submit" class="btn btn-block btn-primary px-2" (click)="recover(email.value)">Recover</button>
+              <form  (ngSubmit)="recover(email.value)">
+                <div class="input-group mb-1">
+                  <span class="input-group-addon"><i class="icon-user"></i></span>
+                  <input #email required="true" type="text" class="form-control" placeholder="Email">
                 </div>
-                <div class="col-xs-6 text-xs-right">
-                  <a class="btn btn-block btn-outline-primary px-2" [routerLink]="['/', 'login']">Return to login</a>
+                <div class="row">
+                  <div class="col-xs-6 text-xs-left">
+                    <button type="submit" class="btn btn-block btn-primary px-2">Recover</button>
+                  </div>
+                  <div class="col-xs-6 text-xs-right">
+                    <a class="btn btn-block btn-outline-primary px-2" [routerLink]="['/', 'auth', 'login']">Return to login</a>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

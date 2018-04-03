@@ -65,9 +65,19 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.http.post('api/users/logout', {},
-      { headers: new Headers({ 'Authorization': JSON.parse(localStorage.getItem('accessToken')).id }) })
-      .subscribe((res: Response) => this.unsetAccessToken());
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    this.unsetAccessToken();
+
+    if (accessToken) {
+      this.http.post('api/users/logout', {},
+        { headers: new Headers({ 'Authorization': accessToken.id })})
+        .subscribe((res: Response) =>
+          this.flashMessageService.show(
+            'User successfully logged out!',
+            { cssClass: 'alert-success', timeout: 2500 }
+          )
+        );
+    }
   }
 
   public register(email: string, password: string, passwordConfirm: string) {
@@ -83,15 +93,13 @@ export class AuthService {
     this.user = new UserModel({ email: email, password: password });
     this.user.save(null, {
       success: () => {
-        this.flashMessageService.show(
-          'User successfully created you will receive a verification email shortly!',
-          { cssClass: 'alert-success', timeout: 10000 }
+        this.router.navigate([this.loginUrl]);
+        setTimeout(() =>
+          this.flashMessageService.show(
+            'User successfully created you will receive a verification email shortly!',
+            { cssClass: 'alert-success', timeout: 10000 }
+          )
         );
-
-        // Wait for the flash message to disappear before re-routing to the login page.
-        setTimeout(() => {
-          this.router.navigate([this.loginUrl]);
-        }, 10250);
       },
       error: (model, res) => {
         this.flashMessageService.show(res.body.error.message, { cssClass: 'alert-danger' });
@@ -106,15 +114,13 @@ export class AuthService {
 
     this.http.post('api/users/reset-password?access_token=' + token, { newPassword: newPassword })
       .subscribe((res: Response) => {
-        this.flashMessageService.show(
-          'User successfully created you will be redirected to login!',
-          { cssClass: 'alert-success', timeout: 10000 }
+        this.router.navigate([this.loginUrl]);
+        setTimeout(() =>
+          this.flashMessageService.show(
+            'User successfully created you will be redirected to login!',
+            { cssClass: 'alert-success', timeout: 10000 }
+          )
         );
-
-        // Wait for the flash message to disappear before re-routing to the login page.
-        setTimeout(() => {
-          this.router.navigate([this.loginUrl]);
-        }, 10250);
       }, err => {
         this.flashMessageService.show(err, { cssClass: 'alert-danger' });
       }
@@ -162,14 +168,13 @@ export class AuthService {
   }
 
   private recoverReply(res: Response) {
-    this.flashMessageService.show(
-      'Your request has been submitted an email should arrive shortly!',
-      { cssClass: 'alert-info', timeout: 9500 }
+    this.router.navigate([this.loginUrl]);
+    setTimeout(() =>
+      this.flashMessageService.show(
+        'Your request has been submitted an email should arrive shortly!',
+        { cssClass: 'alert-info', timeout: 9500 }
+      )
     );
-
-    setTimeout(() => {
-      this.router.navigate([this.loginUrl]);
-    }, 10000);
   }
 
   /**
@@ -207,12 +212,14 @@ export class AuthService {
    * @returns {Observable<User>}
    */
   private unsetAccessToken(): void {
-    this.flashMessageService.show('You have been logged out!', { cssClass: 'alert-info', timeout: 2500 });
+    // Delete the local user.
     delete this.user;
+
+    // Remove the access token from local storage.
     localStorage.removeItem('accessToken');
-    setTimeout(() => {
-      this.router.navigate([this.loginUrl]);
-    }, 2750);
+
+    // Redirect to the login page.
+    this.router.navigate([this.loginUrl]);
   }
 
   /**
