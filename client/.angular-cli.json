@@ -15,7 +15,7 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "al",
       "styles": [
         "scss/style.scss"
       ],

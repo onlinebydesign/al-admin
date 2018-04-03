@@ -6,6 +6,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 import { AlTableComponent } from './al-table/al-table.component';
 import { AlThComponent } from './al-table/al-th.component';
+import { AlFocusDirective } from './al-focus/al-focus.directive';
 
 @NgModule({
   imports: [
@@ -17,11 +18,13 @@ import { AlThComponent } from './al-table/al-th.component';
   ],
   declarations: [
     AlTableComponent,
-    AlThComponent
+    AlThComponent,
+    AlFocusDirective,
   ],
   exports: [
     AlTableComponent,
-    AlThComponent
+    AlThComponent,
+    AlFocusDirective,
   ]
 })
 export class SharedModule { }
