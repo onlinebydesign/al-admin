@@ -13,6 +13,7 @@ import { ReportCreatorComponent } from './report-creator/report-creator.componen
 import { ReportViewerComponent } from './report-viewer/report-viewer.component';
 import { DataComponent } from './data/data.component';
 import { DataGuard } from './data.guard';
+import { DataFormsService } from './data-forms.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { DataGuard } from './data.guard';
     DataComponent,
   ],
   providers: [
-    DataGuard
+    DataGuard,
+    DataFormsService,
   ]
 })
 export class DataModule { }
