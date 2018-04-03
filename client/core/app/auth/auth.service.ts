@@ -156,7 +156,7 @@ export class AuthService {
     const rolePermissionTree = {
       undefined: [],
       '': [''],
-      'admin': ['ManageUsers']
+      'admin': ['ManageUsers', 'ManageData']
     };
 
     const permissions = rolePermissionTree[this.user.role];

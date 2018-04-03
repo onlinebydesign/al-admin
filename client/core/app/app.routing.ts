@@ -25,6 +25,10 @@ export const routes: Routes = [
         loadChildren: './users/users.module#UsersModule'
       },
       {
+        path: 'data',
+        loadChildren: './data/data.module#DataModule'
+      },
+      {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
       },
