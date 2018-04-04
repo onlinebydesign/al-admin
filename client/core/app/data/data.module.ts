@@ -5,15 +5,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
-import { FormsComponent } from './forms/forms.component';
-import { FormCreatorComponent } from './form-creator/form-creator.component';
-import { FormViewerComponent } from './form-viewer/form-viewer.component';
-import { ReportsComponent } from './reports/reports.component';
-import { ReportCreatorComponent } from './report-creator/report-creator.component';
-import { ReportViewerComponent } from './report-viewer/report-viewer.component';
+import { FormsComponent } from './al-forms/forms/forms.component';
+import { FormCreatorComponent } from './al-forms/form-creator/form-creator.component';
+import { FormViewerComponent } from './al-forms/form-viewer/form-viewer.component';
+import { ReportsComponent } from './al-reports/reports/reports.component';
+import { ReportCreatorComponent } from './al-reports/report-creator/report-creator.component';
+import { ReportViewerComponent } from './al-reports/report-viewer/report-viewer.component';
 import { DataComponent } from './data/data.component';
 import { DataGuard } from './data.guard';
-import { DataFormsService } from './data-forms.service';
+import { DataFormsService } from './al-forms/data-forms.service';
+import { DataReportsService } from './al-reports/data-reports.service';
+import { DataService } from './data.service';
 
 @NgModule({
   imports: [
@@ -36,6 +38,8 @@ import { DataFormsService } from './data-forms.service';
   providers: [
     DataGuard,
     DataFormsService,
+    DataService,
+    DataReportsService,
   ]
 })
 export class DataModule { }

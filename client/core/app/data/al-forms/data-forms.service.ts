@@ -12,6 +12,7 @@ export class DataFormsService {
   private forms: DataForm[] = [
     { // Sample form until we have a backend.
       id: 'test-id',
+      version: 1,
       name: 'test',
       fields: [{
         key: 'email',
