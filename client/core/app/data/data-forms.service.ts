@@ -9,14 +9,29 @@ export class DataFormsService {
   public forms$: Observable<DataForm[]>;
   public formsSubject: BehaviorSubject<DataForm[]>;
 
-  private forms: DataForm[] = [];
+  private forms: DataForm[] = [
+    { // Sample form until we have a backend.
+      id: 'test-id',
+      name: 'test',
+      fields: [{
+        key: 'email',
+        type: 'input',
+        templateOptions: {
+          type: 'email',
+          label: 'Email address',
+          placeholder: 'Enter email',
+          required: true,
+        }
+      }],
+    }
+  ];
 
   constructor() {
     this.formsSubject = new BehaviorSubject<DataForm[]>(this.forms);
     this.forms$ = this.formsSubject.asObservable();
   }
 
-  getById(id: string): DataForm {
+  public getById(id: string): DataForm {
     let foundForm: DataForm;
 
     this.forms.forEach((form) => {
@@ -28,7 +43,18 @@ export class DataFormsService {
     return foundForm;
   }
 
-  addForm(form: DataForm) {
+  public save(form: DataForm) {
+    const existingForm = this.getById(form.id);
+
+    if (!existingForm) {
+      return this.add(form);
+    }
+
+    existingForm.name = form.name;
+    existingForm.fields = form.fields;
+  }
+
+  public add(form: DataForm) {
     this.forms.push(form);
     this.formsSubject.next(this.forms);
   }

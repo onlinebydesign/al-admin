@@ -3,12 +3,17 @@
     <i class="fa fa-align-justify"></i> Forms
   </div>
   <div class="card-body">
-    <div class="row">
-      <div class="col">
+    <div class="row mb-2">
+      <div class="col-4">
         <button class="col-12 btn btn-lg btn-primary" routerLinkActive="active" [routerLink]="['creator']">New Form</button>
       </div>
+    </div>
+    <div *ngFor="let form of forms" class="row mb-2">
       <div class="col">
-        <button class="col-12 btn btn-lg btn-success" routerLinkActive="active" [routerLink]="['viewer', 'test']">View Form</button>
+        <button class="col-12 btn btn-lg btn-primary" routerLinkActive="active" [routerLink]="['editor', form.id]">Edit {{form.name}}</button>
+      </div>
+      <div class="col">
+        <button class="col-12 btn btn-lg btn-success" routerLinkActive="active" [routerLink]="['viewer', form.id]">View {{form.name}}</button>
       </div>
     </div>
   </div>

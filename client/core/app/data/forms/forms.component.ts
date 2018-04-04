@@ -9,9 +9,11 @@ import { DataForm } from '../data-form';
   styleUrls: ['./forms.component.scss']
 })
 export class FormsComponent implements OnInit {
-  public forms: DataForm[] = [];
+  public forms: DataForm[];
 
-  constructor(private formsService: DataFormsService) { }
+  constructor(private formsService: DataFormsService) {
+    this.formsService.forms$.subscribe((forms) => this.forms = forms);
+  }
 
   ngOnInit() {
   }
