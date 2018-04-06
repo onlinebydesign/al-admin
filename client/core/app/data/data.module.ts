@@ -1,4 +1,3 @@
-import { DataRoutingModule } from './data.routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -16,6 +15,8 @@ import { DataGuard } from './data.guard';
 import { DataFormsService } from './al-forms/data-forms.service';
 import { DataReportsService } from './al-reports/data-reports.service';
 import { DataService } from './data.service';
+import { FormComponent } from './al-forms/form/form.component';
+import { DataRoutingModule } from './data.routing.module';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { DataService } from './data.service';
     ReportCreatorComponent,
     ReportViewerComponent,
     DataComponent,
+    FormComponent,
   ],
   providers: [
     DataGuard,

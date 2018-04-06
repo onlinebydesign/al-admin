@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -26,6 +27,10 @@ export class DataService {
     });
 
     return foundData;
+  }
+
+  public getByFormId(formId: string): Data[] {
+    return _.filter(this.data, {formId: formId});
   }
 
   public save(data: Data) {

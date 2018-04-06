@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
@@ -10,37 +9,58 @@ import { Data } from '../../data';
 import { DataService } from '../../data.service';
 
 @Component({
-  selector: 'al-form-viewer',
-  templateUrl: './form-viewer.component.html',
-  styleUrls: ['./form-viewer.component.scss']
+  selector: 'al-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
-export class FormViewerComponent implements OnInit {
+export class FormComponent implements OnInit {
+  @Input() public formId: string;
+  @Input() public dataId: string;
+  @Output() public saved = new EventEmitter<Data>();
+
   public dataForm: DataForm;
   public form: FormGroup;
   public model: any;
-  public data: Data[];
-  public selectedDatum: Data;
 
-  private formId: string;
+  private data: Data;
 
   constructor(
     private dataFormsService: DataFormsService,
     private dataService: DataService,
-    private flashMessageService: FlashMessagesService,
-    private route: ActivatedRoute
+    private flashMessageService: FlashMessagesService
   ) { }
 
   ngOnInit() {
     // Get the form from the form service if an form id is passed in.
-    this.route.params
-    .subscribe((params: Params) => {
-      this.formId = params['id'];
+    this.loadData();
+  }
 
+  public submit(model) {
+    let data: Data;
+
+    if (this.data) {
+      this.data.data = model;
+    } else {
+      data = {
+        id: Math.random() + '',
+        formId: this.dataForm.id,
+        formVersion: this.dataForm.version,
+        data: model,
+        created: null
+      }
+    }
+
+    this.dataService.save(this.data || data);
+    this.saved.emit(this.data || data);
+
+    this.flashMessageService.show(
+      'Form Saved',
+      { cssClass: 'alert-info', timeout: 9500 }
+    );
+
+    setTimeout(() => {
       this.loadData();
     });
-
-    // TODO: There should be an observable for the formId of data instead of for the entire collection.
-    this.dataService.data$.subscribe(() => this.data = this.dataService.getByFormId(this.formId));
   }
 
   private loadData() {
@@ -48,7 +68,7 @@ export class FormViewerComponent implements OnInit {
       try {
         // We have to clone this so that ngx-formly doesn't mess with the the fields.
         this.dataForm = JSON.parse(JSON.stringify(this.dataFormsService.getById(this.formId)));
-      } catch (e) {}
+      } catch (e) { }
     }
 
     if (!this.dataForm) {
@@ -60,8 +80,14 @@ export class FormViewerComponent implements OnInit {
       };
     }
 
-    this.model = {};
     this.form = new FormGroup({});
+
+    if (this.dataId) {
+      this.data = this.dataService.getById(this.dataId);
+      return this.model = this.data.data;
+    }
+
+    this.model = {};
   }
 
 }
