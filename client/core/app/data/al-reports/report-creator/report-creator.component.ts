@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import * as _ from 'lodash';
 
 import { DataForm } from '../../al-forms/data-form';
@@ -6,6 +7,7 @@ import { DataFormsService } from '../../al-forms/data-forms.service';
 import { DataReport } from '../data-report';
 import { DataReportsService } from '../data-reports.service';
 import { DataReportField } from '../data-report-field';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'al-report-creator',
@@ -14,6 +16,9 @@ import { DataReportField } from '../data-report-field';
 })
 export class ReportCreatorComponent implements OnInit {
   public forms: DataForm[];
+  public reportId: string;
+  public id: string;
+  public version: number;
   public name: string;
   public reportForms: string[];
   public fullReportForms: DataForm[];
@@ -38,16 +43,40 @@ export class ReportCreatorComponent implements OnInit {
 
   constructor(
     private formsService: DataFormsService,
-    private reportsService: DataReportsService
+    private reportsService: DataReportsService,
+    private flashMessageService: FlashMessagesService,
+    private route: ActivatedRoute
   ) {
     this.formsService.forms$.subscribe((forms) => this.forms = forms);
   }
 
   ngOnInit() {
+    // Get the form from the form service if an form id is passed in.
+    this.route.params
+      .subscribe((params: Params) => {
+        this.reportId = params['id'];
+
+        this.loadData();
+      });
   }
 
   public save() {
-    console.log(this.name, this.reportForms, this.fields);
+    const report: DataReport = {
+      id: this.id,
+      version: this.version += 1,
+      name: this.name,
+      forms: this.reportForms,
+      fields: this.fields
+    }
+
+    this.reportsService.save(report);
+
+    this.flashMessageService.show(
+      'Form Saved',
+      { cssClass: 'alert-info', timeout: 9500 }
+    );
+
+    this.loadData();
   }
 
   public addField() {
@@ -79,4 +108,26 @@ export class ReportCreatorComponent implements OnInit {
       this.formsFields[form.id] = formFields;
     });
   }
+
+  private loadData() {
+    if (this.reportId) {
+      const report = Object.assign({}, this.reportsService.getById(this.reportId));
+      this.id = report.id;
+      this.version = report.version;
+      this.name = report.name;
+      this.reportForms = report.forms;
+      this.fields = report.fields;
+
+      this.updateFullReportForms();
+      return;
+    }
+
+    // Defaults for new forms.
+    this.id = Math.random() + ''; // TODO: When this is created on the server we should remove this random number.
+    this.version = 0; // Start with 0 so incrementing sets the first saved to 1.
+    this.name = '';
+    this.reportForms = [];
+    this.fields = [];
+  }
+
 }

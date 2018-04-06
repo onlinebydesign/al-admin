@@ -4,6 +4,6 @@ export interface DataReport {
   id: string;
   version: number;
   name: string;
-  form: string[];
+  forms: string[];
   fields: DataReportField[];
 }

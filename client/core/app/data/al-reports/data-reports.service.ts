@@ -13,7 +13,7 @@ export class DataReportsService {
     { // Sample form until we have a backend.
       id: 'test-id',
       version: 1,
-      form: ['test-id'],
+      forms: ['test-id'],
       name: 'test',
       fields: [{
         id: 'field-id',
