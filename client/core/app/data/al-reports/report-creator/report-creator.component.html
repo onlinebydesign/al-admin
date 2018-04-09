@@ -15,30 +15,34 @@
         </select>
       </div>
       <h3>Fields</h3>
-      <div *ngFor="let field of fields">
-        <div class="form-group">
-          <label for="field-{{field.id}}-name">Name</label>
-          <input class="form-control" id="field-{{field.id}}-name" name="fields[{{field.id}}]['name']" [(ngModel)]="field.name">
-        </div>
-        <div class="form-group">
-          <label for="field-{{field.id}}-form">Form</label>
-          <select class="form-control" id="field-{{field.id}}-form" name="fields[{{field.id}}]['form']" [(ngModel)]="field.data.id">
-            <option *ngFor="let form of fullReportForms" [ngValue]="form.id">{{form.name}}</option>
-          </select>
-        </div>
-        <div class="form-group" *ngIf="field.data?.id">
-          <label for="field-{{field.id}}-form-field">Form Field</label>
-          <select class="form-control" id="field-{{field.id}}-form-field" name="fields[{{field.id}}]['formField']" [(ngModel)]="field.fieldId">
-            <option *ngFor="let field of formsFields[field.data.id]" [ngValue]="field.id">{{field.label}}</option>
-          </select>
-        </div>
-        <div class="form-group" *ngIf="field.fieldId">
-            <label for="field-{{field.id}}-type">Type</label>
-            <select class="form-control" id="field-{{field.id}}-type" name="fields[{{field.id}}]['type']" [(ngModel)]="field.type">
-              <option *ngFor="let type of fieldTypes" [ngValue]="type.id">{{type.label}}</option>
-            </select>
+      <div *ngFor="let field of fields" class="row">
+        <div class="card col-sm-6 col-lg-4">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="field-{{field.id}}-name">Name</label>
+              <input class="form-control" id="field-{{field.id}}-name" name="fields[{{field.id}}]['name']" [(ngModel)]="field.name">
+            </div>
+            <div class="form-group">
+              <label for="field-{{field.id}}-form">Form</label>
+              <select class="form-control" id="field-{{field.id}}-form" name="fields[{{field.id}}]['form']" [(ngModel)]="field.data.id">
+                <option *ngFor="let form of fullReportForms" [ngValue]="form.id">{{form.name}}</option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="field.data?.id">
+              <label for="field-{{field.id}}-form-field">Form Field</label>
+              <select class="form-control" id="field-{{field.id}}-form-field" name="fields[{{field.id}}]['formField']" [(ngModel)]="field.fieldId">
+                <option *ngFor="let field of formsFields[field.data.id]" [ngValue]="field.id">{{field.label}}</option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="field.fieldId">
+              <label for="field-{{field.id}}-type">Type</label>
+              <select class="form-control" id="field-{{field.id}}-type" name="fields[{{field.id}}]['type']" [(ngModel)]="field.type">
+                <option *ngFor="let type of fieldTypes" [ngValue]="type.id">{{type.label}}</option>
+              </select>
+            </div>
           </div>
         </div>
+      </div>
       <button type="button" class="btn btn-default" (click)="addField()">Add field</button>
 
       <button type="submit" class="btn btn-primary">Save</button>

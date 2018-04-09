@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import { DataForm } from '../../al-forms/data-form';
 import { DataFormsService } from '../../al-forms/data-forms.service';
-import { DataReport } from '../data-report';
+import { Report } from '../report';
 import { DataReportsService } from '../data-reports.service';
 import { DataReportField } from '../data-report-field';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -40,7 +40,7 @@ export class ReportCreatorComponent implements OnInit {
     }
   ];
 
-  private report: DataReport;
+  private report: Report;
 
   constructor(
     private formsService: DataFormsService,
@@ -62,7 +62,7 @@ export class ReportCreatorComponent implements OnInit {
   }
 
   public save() {
-    const report: DataReport = {
+    const report: Report = {
       id: this.id,
       version: this.version += 1,
       name: this.name,

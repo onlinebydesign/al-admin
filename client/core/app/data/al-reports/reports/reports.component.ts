@@ -1,5 +1,6 @@
-import { DataReport } from './../data-report';
 import { Component, OnInit } from '@angular/core';
+
+import { Report } from '../report';
 import { DataReportsService } from '../data-reports.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { DataReportsService } from '../data-reports.service';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
-  public reports: DataReport[];
+  public reports: Report[];
 
   constructor(private reportsService: DataReportsService) {
     this.reportsService.reports$.subscribe((reports) => this.reports = reports);

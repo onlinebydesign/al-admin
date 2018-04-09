@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { DataReport } from './data-report';
+import { Report } from './report';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class DataReportsService {
-  public reports$: Observable<DataReport[]>;
-  public reportsSubject: BehaviorSubject<DataReport[]>;
+  public reports$: Observable<Report[]>;
+  public reportsSubject: BehaviorSubject<Report[]>;
 
-  private reports: DataReport[] = [
+  private reports: Report[] = [
     { // Sample form until we have a backend.
       id: 'test-id',
       version: 1,
@@ -26,12 +26,12 @@ export class DataReportsService {
   ];
 
   constructor() {
-    this.reportsSubject = new BehaviorSubject<DataReport[]>(this.reports);
+    this.reportsSubject = new BehaviorSubject<Report[]>(this.reports);
     this.reports$ = this.reportsSubject.asObservable();
   }
 
-  public getById(id: string): DataReport {
-    let foundReport: DataReport;
+  public getById(id: string): Report {
+    let foundReport: Report;
 
     this.reports.forEach((report) => {
       if (report.id === id) {
@@ -42,7 +42,7 @@ export class DataReportsService {
     return foundReport;
   }
 
-  public save(report: DataReport) {
+  public save(report: Report) {
     const existingReport = this.getById(report.id);
 
     if (!existingReport) {
@@ -53,7 +53,7 @@ export class DataReportsService {
     existingReport.fields = report.fields;
   }
 
-  public add(report: DataReport) {
+  public add(report: Report) {
     this.reports.push(report);
     this.reportsSubject.next(this.reports);
   }

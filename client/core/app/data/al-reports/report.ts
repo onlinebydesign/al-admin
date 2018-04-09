@@ -1,7 +1,7 @@
 import { DataSource } from '../data-source';
 import { DataReportField } from './data-report-field';
 
-export interface DataReport {
+export interface Report {
   id: string;
   version: number;
   name: string;
