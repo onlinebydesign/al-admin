@@ -26,7 +26,10 @@ export const routes: Routes = [
       },
       {
         path: 'data',
-        loadChildren: './data/data.module#DataModule'
+        loadChildren: './data/data.module#DataModule',
+        data: {
+          title: 'Data'
+        }
       },
       {
         path: 'dashboard',

@@ -52,13 +52,13 @@
 
   .sidebar-fixed {
 
-    .main, .app-footer {
+    .main, .al-footer {
       margin-right: $sidebar-width;
     }
 
     &.sidebar-hidden {
 
-      .main, .app-footer {
+      .main, .al-footer {
         margin-right: 0;
       }
     }
@@ -78,13 +78,13 @@
 
     &.sidebar-fixed {
 
-      .main, .app-footer {
+      .main, .al-footer {
         margin-left: $sidebar-minimized-width;
       }
 
       &.sidebar-hidden {
 
-        .main, .app-footer {
+        .main, .al-footer {
           margin-left: 0;
         }
       }
@@ -109,14 +109,14 @@
       left: 0;
     }
 
-    .main, .app-footer {
+    .main, .al-footer {
       //margin-right: 0;
       margin-left: $aside-menu-width;
     }
 
     &.aside-menu-hidden {
 
-      .main, .app-footer {
+      .main, .al-footer {
         margin-left: 0;
       }
     }

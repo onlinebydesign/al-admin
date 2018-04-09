@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './app-header.component.html'
+  selector: 'al-header',
+  templateUrl: './header.component.html'
 })
-export class AppHeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
   // public disabled = false;
   // public status: {isopen: boolean} = {isopen: false};

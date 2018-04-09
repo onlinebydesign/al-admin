@@ -17,72 +17,74 @@ const routes: Routes = [
     data: {
       title: 'Data'
     },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'forms',
-    component: FormsComponent,
-    data: {
-      title: 'Forms'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'forms/creator',
-    component: FormCreatorComponent,
-    data: {
-      title: 'Form Creator'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'forms/editor/:id',
-    component: FormCreatorComponent,
-    data: {
-      title: 'Form Editor'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'forms/viewer/:id',
-    component: FormViewerComponent,
-    data: {
-      title: 'Form Viewer'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'reports',
-    component: ReportsComponent,
-    data: {
-      title: 'Reports'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'reports/creator',
-    component: ReportCreatorComponent,
-    data: {
-      title: 'Report Creator'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'reports/editor/:id',
-    component: ReportCreatorComponent,
-    data: {
-      title: 'Report Editor'
-    },
-    canActivate: [DataGuard]
-  },
-  {
-    path: 'reports/viewer/:id',
-    component: ReportViewerComponent,
-    data: {
-      title: 'Report Viewer'
-    },
-    canActivate: [DataGuard]
-  },
+    canActivate: [DataGuard],
+    children: [
+      {
+        path: 'forms',
+        component: FormsComponent,
+        data: {
+          title: 'Forms'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'forms/creator',
+        component: FormCreatorComponent,
+        data: {
+          title: 'Form Creator'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'forms/editor/:id',
+        component: FormCreatorComponent,
+        data: {
+          title: 'Form Editor'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'forms/viewer/:id',
+        component: FormViewerComponent,
+        data: {
+          title: 'Form Viewer'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
+        data: {
+          title: 'Reports'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'reports/creator',
+        component: ReportCreatorComponent,
+        data: {
+          title: 'Report Creator'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'reports/editor/:id',
+        component: ReportCreatorComponent,
+        data: {
+          title: 'Report Editor'
+        },
+        canActivate: [DataGuard]
+      },
+      {
+        path: 'reports/viewer/:id',
+        component: ReportViewerComponent,
+        data: {
+          title: 'Report Viewer'
+        },
+        canActivate: [DataGuard]
+      },
+    ]
+  }
 ];
 
 @NgModule({

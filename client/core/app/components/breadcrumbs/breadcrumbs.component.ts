@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 @Component({
-  selector: 'app-breadcrumbs',
+  selector: 'al-breadcrumbs',
   template: `
   <ng-template ngFor let-breadcrumb [ngForOf]="breadcrumbs" let-last = last>
     <li class="breadcrumb-item"
@@ -14,7 +14,7 @@ import 'rxjs/add/operator/filter';
     </li>
   </ng-template>`
 })
-export class AppBreadcrumbs {
+export class BreadcrumbsComponent {
   breadcrumbs: Array<Object>;
   constructor(
     private router: Router,
@@ -27,15 +27,15 @@ export class AppBreadcrumbs {
       do {
         const childrenRoutes = currentRoute.children;
         currentRoute = null;
-        childrenRoutes.forEach(route => {
-          if (route.outlet === 'primary') {
-            const routeSnapshot = route.snapshot;
+        childrenRoutes.forEach(routeRoute => {
+          if (routeRoute.outlet === 'primary') {
+            const routeSnapshot = routeRoute.snapshot;
             url += '/' + routeSnapshot.url.map(segment => segment.path).join('/');
             this.breadcrumbs.push({
-              label: route.snapshot.data,
+              label: routeRoute.snapshot.data,
               url:   url
             });
-            currentRoute = route;
+            currentRoute = routeRoute;
           }
         });
       } while (currentRoute);

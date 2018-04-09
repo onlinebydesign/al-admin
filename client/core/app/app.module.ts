@@ -19,19 +19,19 @@ const APP_CONTAINERS = [
 
 // Import components
 import {
-  AppAside,
-  AppBreadcrumbs,
-  AppFooter,
-  AppHeaderComponent,
-  AppSidebar
+  AsideComponent,
+  BreadcrumbsComponent,
+  FooterComponent,
+  HeaderComponent,
+  SidebarComponent
 } from './components';
 
 const APP_COMPONENTS = [
-  AppAside,
-  AppBreadcrumbs,
-  AppFooter,
-  AppHeaderComponent,
-  AppSidebar
+  AsideComponent,
+  BreadcrumbsComponent,
+  FooterComponent,
+  HeaderComponent,
+  SidebarComponent
 ];
 
 // Import directives
