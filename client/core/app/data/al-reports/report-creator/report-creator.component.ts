@@ -20,6 +20,7 @@ export class ReportCreatorComponent implements OnInit {
   public id: string;
   public version: number;
   public name: string;
+  // TODO: Allow additional sources beyond forms.
   public reportForms: string[];
   public fullReportForms: DataForm[];
   public formsFields: any;
@@ -65,7 +66,13 @@ export class ReportCreatorComponent implements OnInit {
       id: this.id,
       version: this.version += 1,
       name: this.name,
-      forms: this.reportForms,
+      // TODO: Allow additional sources beyond forms.
+      sources: this.reportForms.map((formId) => {
+        return {
+          source: 'form',
+          id: formId
+        };
+      }),
       fields: this.fields
     }
 
@@ -83,7 +90,7 @@ export class ReportCreatorComponent implements OnInit {
     const newField: DataReportField = {
       id: Math.random() + '',
       name: '',
-      formId: '',
+      data: {source: 'form', id: null},
       fieldId: '',
       type: '',
     }
@@ -115,7 +122,8 @@ export class ReportCreatorComponent implements OnInit {
       this.id = report.id;
       this.version = report.version;
       this.name = report.name;
-      this.reportForms = report.forms;
+      // TODO: Allow additional sources beyond forms.
+      this.reportForms = report.sources.map(source => source.id);
       this.fields = report.fields;
 
       this.updateFullReportForms();

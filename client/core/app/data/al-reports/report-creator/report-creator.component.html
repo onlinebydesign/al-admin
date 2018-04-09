@@ -22,14 +22,14 @@
         </div>
         <div class="form-group">
           <label for="field-{{field.id}}-form">Form</label>
-          <select class="form-control" id="field-{{field.id}}-form" name="fields[{{field.id}}]['form']" [(ngModel)]="field.formId">
+          <select class="form-control" id="field-{{field.id}}-form" name="fields[{{field.id}}]['form']" [(ngModel)]="field.data.id">
             <option *ngFor="let form of fullReportForms" [ngValue]="form.id">{{form.name}}</option>
           </select>
         </div>
-        <div class="form-group" *ngIf="field.formId">
+        <div class="form-group" *ngIf="field.data?.id">
           <label for="field-{{field.id}}-form-field">Form Field</label>
           <select class="form-control" id="field-{{field.id}}-form-field" name="fields[{{field.id}}]['formField']" [(ngModel)]="field.fieldId">
-            <option *ngFor="let field of formsFields[field.formId]" [ngValue]="field.id">{{field.label}}</option>
+            <option *ngFor="let field of formsFields[field.data.id]" [ngValue]="field.id">{{field.label}}</option>
           </select>
         </div>
         <div class="form-group" *ngIf="field.fieldId">

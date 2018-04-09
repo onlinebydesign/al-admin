@@ -13,13 +13,12 @@ export class DataReportsService {
     { // Sample form until we have a backend.
       id: 'test-id',
       version: 1,
-      forms: ['test-id'],
+      sources: [{source: 'form', id: 'test-id'}],
       name: 'test',
       fields: [{
         id: 'field-id',
         name: 'Emails',
-        formId: 'test-id',
-        formVersion: 1,
+        data: {source: 'form', id: 'test-id', version: 1},
         fieldId: 'email',
         type: 'count',
       }],

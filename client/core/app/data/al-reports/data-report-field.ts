@@ -1,8 +1,9 @@
+import { DataSource } from '../data-source';
+
 export interface DataReportField {
   id: string;
   name: string;
-  formId: string;
-  formVersion?: number;
+  data: DataSource;
   fieldId: string;
   type: string;
 }
