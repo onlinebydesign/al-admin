@@ -2,9 +2,9 @@ import * as Model from 'ampersand-model';
 import * as _ from 'lodash';
 
 export const UserModel = Model.extend({
-  urlRoot: '/api/Users',
+  urlRoot: '/api/user',
   props: {
-    id: 'number',
+    id: 'any',
     email: 'string',
     emailVerified: 'boolean',
     firstName: 'string',
@@ -25,7 +25,7 @@ export const UserModel = Model.extend({
 
 
 export class User {
-  id: number;
+  id: string|number;
   email: string;
   emailVerified: boolean;
   firstName?: string;

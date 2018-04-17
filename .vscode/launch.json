@@ -7,8 +7,19 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceRoot}/server/server.js",
+      "name": "Launch Loopback",
+      "program": "${workspaceRoot}/old-server/server/server.js",
+      "outFiles": [
+        "${workspaceRoot}/out-lb/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch NestJS",
+      "program": "${workspaceRoot}/server/index.js",
+      "cwd": "${workspaceFolder}/server",
+      "sourceMaps": true,
       "outFiles": [
         "${workspaceRoot}/out/**/*.js"
       ]

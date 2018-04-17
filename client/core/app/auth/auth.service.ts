@@ -49,7 +49,7 @@ export class AuthService {
 
     // If email and password are provided then login
     if (email && password) {
-      this.http.post('api/users/login', { email: email, password: password })
+      this.http.post('api/auth/login', { email: email, password: password })
         .subscribe((res: Response) => {
           localStorage.setItem('accessToken', res.text());
 
@@ -69,7 +69,7 @@ export class AuthService {
     this.unsetAccessToken();
 
     if (accessToken) {
-      this.http.post('api/users/logout', {},
+      this.http.post('api/auth/logout', {},
         { headers: new Headers({ 'Authorization': accessToken.id })})
         .subscribe((res: Response) =>
           this.flashMessageService.show(
@@ -80,7 +80,7 @@ export class AuthService {
     }
   }
 
-  public register(email: string, password: string, passwordConfirm: string) {
+  public async register(email: string, password: string, passwordConfirm: string) {
     if (password !== passwordConfirm) {
       return this.flashMessageService.show('Passwords must match!');
     }
@@ -90,40 +90,38 @@ export class AuthService {
       { cssClass: 'alert-info', timeout: 2500 }
     );
 
-    this.user = new UserModel({ email: email, password: password });
-    this.user.save(null, {
-      success: () => {
-        this.router.navigate([this.loginUrl]);
-        setTimeout(() =>
-          this.flashMessageService.show(
-            'User successfully created you will receive a verification email shortly!',
-            { cssClass: 'alert-success', timeout: 10000 }
-          )
-        );
-      },
-      error: (model, res) => {
-        this.flashMessageService.show(res.body.error.message, { cssClass: 'alert-danger' });
-      }
-    });
+    try {
+      this.user = await this.createUser(email, password);
+    } catch (e) {
+      return this.flashMessageService.show(e.json().message, { cssClass: 'alert-danger' });
+    }
+
+    this.router.navigate([this.loginUrl]);
+    setTimeout(() =>
+      this.flashMessageService.show(
+        'User successfully created you will receive a verification email shortly!',
+        { cssClass: 'alert-success', timeout: 10000 }
+      )
+    );
   }
 
-  public resetPassword(newPassword: string, newPasswordConfirm: string, token: string) {
+  public async resetPassword(newPassword: string, newPasswordConfirm: string, token: string) {
     if (newPassword !== newPasswordConfirm) {
       return this.flashMessageService.show('Passwords must match!');
     }
 
-    this.http.post('api/users/reset-password?access_token=' + token, { newPassword: newPassword })
-      .subscribe((res: Response) => {
-        this.router.navigate([this.loginUrl]);
-        setTimeout(() =>
-          this.flashMessageService.show(
-            'User successfully created you will be redirected to login!',
-            { cssClass: 'alert-success', timeout: 10000 }
-          )
-        );
-      }, err => {
-        this.flashMessageService.show(err, { cssClass: 'alert-danger' });
-      }
+    try {
+      await this.http.post('api/auth/reset-password?access_token=' + token, { newPassword: newPassword }).toPromise();
+    } catch (e) {
+      return this.flashMessageService.show(e.json().message, { cssClass: 'alert-danger' });
+    }
+
+    this.router.navigate([this.loginUrl]);
+    setTimeout(() =>
+      this.flashMessageService.show(
+        'User successfully created you will be redirected to login!',
+        { cssClass: 'alert-success', timeout: 10000 }
+      )
     );
   }
 
@@ -138,7 +136,7 @@ export class AuthService {
 
   public recover(email: string) {
     // We always give the same reply regardless of the results from the server.
-    this.http.post('api/users/reset',
+    this.http.post('api/auth/reset',
       { email: email })
       .subscribe(res => this.recoverReply(res), res => this.recoverReply(res));
   }
@@ -245,6 +243,11 @@ export class AuthService {
     });
 
     return this.user$;
+  }
+
+  private async createUser(email: string, password: string): Promise<User> {
+    const response = await this.http.post('api/auth', { email: email, password: password }).toPromise();
+    return new UserModel(response);
   }
 
 }
