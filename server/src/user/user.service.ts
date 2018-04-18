@@ -23,7 +23,7 @@ export class UserService {
 
   // This would just be used when creating the user as an admin.
   public async create(userInfo): Promise<User> {
-    const user = this.userRepository.create(userInfo);
+    const user: User = this.userRepository.create(userInfo);
     return await this.userRepository.save(user);
   }
 

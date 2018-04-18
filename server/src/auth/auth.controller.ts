@@ -30,9 +30,36 @@ export class AuthController {
     return await this.authService.authenticate(body.email, body.password);
   }
 
+  // Currently this does nothing as the JWT doesn't allow for invalidating tokens. We should be having them refresh the token regularly.
+  // We might consider having a blacklist for invalidating tokens but then we loose the advantage of JWT.
   @Post('logout')
   public async logout() {
     return await this.authService.loggoutUser()
+  }
+
+  @Post('reset')
+  public async reset(@Body() body): Promise<boolean> {
+    return await this.authService.initiatePasswordReset(body.email);
+  }
+
+  // TODO: It would be nice if there was a way to validate the reset token before they start typing the new password.
+  @Get('reset-password')
+  public async validateResetToken(@Query() query, @Res() res) {
+    if (!query.token) {
+      return res.status(400).send('No reset token is included');
+    }
+    const user = await this.authService.validateResetToken(query.token);
+    if (user) {
+      return res.redirect(`/auth/reset-password?resetToken=${encodeURIComponent(query.token)}`);
+    }
+
+    return res.status(400).send('Unable to verify token');
+  }
+
+  // TODO: It would be nice if there was a way to validate the reset token before they start typing the new password.
+  @Post('reset-password')
+  public async resetPassword(@Body() body, @Query() query): Promise<User> {
+    return await this.authService.resetPassword(query.resetToken, body.password);
   }
 
   @Post()
@@ -40,4 +67,5 @@ export class AuthController {
     console.dir(user);
     return this.authService.create(user);
   }
+
 }

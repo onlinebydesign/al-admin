@@ -13,7 +13,7 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private authService: AuthService) {
     this.route.queryParams.subscribe(params => {
-      this.token = params['access_token'];
+      this.token = params['resetToken'];
     });
   }
 

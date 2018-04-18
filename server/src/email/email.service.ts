@@ -51,4 +51,25 @@ export class EmailService {
 
     return this.sendTo(user.email, data);
   }
+
+  public sendResetPassword(user: User): Promise<Object> {
+    const url = `${process.env.url}:${process.env.port}/api/auth/reset-password?token=${encodeURIComponent(user.resetPasswordToken)}`;
+
+    const data = {
+      subject: 'Password Reset Request',
+      html: `<p>
+        Click the link below to complete your password reset.
+      </p>
+      
+      <p>
+        <a href="${url}">${url}</a>
+      </p>`,
+      text: `Go to the link below to complete your password reset.
+      
+      ${url}
+      `
+    };
+
+    return this.sendTo(user.email, data);
+  }
 }

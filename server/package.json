@@ -24,14 +24,14 @@
     "passport-jwt": "^4.0.0",
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
-    "rxjs": "^5.4.3",
-    "typeorm": "^0.1.20",
+    "rxjs": "^5.5.10",
+    "typeorm": "^0.1.21",
     "typescript": "^2.4.2"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/mailgun-js": "^0.16.0",
-    "@types/node": "^9.6.2",
+    "@types/node": "^9.6.5",
     "@types/passport-jwt": "^3.0.1",
     "ts-node": "^5.0.1"
   }

@@ -111,7 +111,7 @@ export class AuthService {
     }
 
     try {
-      await this.http.post('api/auth/reset-password?access_token=' + token, { newPassword: newPassword }).toPromise();
+      await this.http.post(`api/auth/reset-password?resetToken=${encodeURIComponent(token)}`, { password: newPassword }).toPromise();
     } catch (e) {
       return this.flashMessageService.show(e.json().message, { cssClass: 'alert-danger' });
     }

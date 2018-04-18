@@ -1,5 +1,6 @@
 import { EntityRepository, Repository, EntityManager } from 'typeorm';
 import * as crypto from 'crypto';
+import * as moment from 'moment';
 
 import { User } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
@@ -37,8 +38,13 @@ export class AuthRepository extends UserRepository {
   }
 
   public async assignVerificationToken(user: User): Promise<User> {
-    const token = crypto.randomBytes(60).toString('base64');
-    user.verificationToken = token;
+    user.verificationToken = crypto.randomBytes(60).toString('base64');
+    return await this.save(user);
+  }
+
+  public async assignResetToken(user: User): Promise<User> {
+    user.resetPasswordToken = crypto.randomBytes(60).toString('base64');
+    user.resetPasswordExpires = moment().add(7, 'day').unix();
     return await this.save(user);
   }
 

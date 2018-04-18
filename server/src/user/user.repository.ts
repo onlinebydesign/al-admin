@@ -12,6 +12,10 @@ export class UserRepository extends Repository<User> {
     return await this.findOne({where: {email: email}});
   }
 
+  public async findOneByResetToken(token: string): Promise<User> {
+    return await this.findOne({where: {resetPasswordToken: token}});
+  }
+
   public async findOneById(id: any, options?: FindManyOptions<User>): Promise<User> {
     const user = await super.findOneById(id);
 

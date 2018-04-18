@@ -18,7 +18,7 @@ export class User {
 
   // For resetting password
   @Column() resetPasswordToken: string;
-  @Column() resetPasswordExpires: string;
+  @Column() resetPasswordExpires: number; // This should be a unix timestamp.
 
   // For email verification
   @Column() verificationToken: string;
