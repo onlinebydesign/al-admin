@@ -1,7 +1,7 @@
-import * as jwt from 'jsonwebtoken';
-import * as moment from 'moment';
 import { Component, Inject, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Repository, getCustomRepository } from 'typeorm';
+import * as jwt from 'jsonwebtoken';
+import * as moment from 'moment';
 
 import { User } from '../user/user.entity';
 import { AuthRepository } from './auth.repository';
