@@ -9,7 +9,7 @@ export const UsersCollection = Collection.extend({
         if (this.queryFilter) {
             return 'api/user?filter=' + JSON.stringify(this.queryFilter);
         }
-        return 'api/users';
+        return 'api/user';
     },
     ajaxConfig: () => {
         const accessToken = _.defaultTo(JSON.parse(localStorage.getItem('accessToken')), {});

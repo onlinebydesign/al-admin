@@ -53,7 +53,7 @@ export class AuthService {
 
     // Create a user instance that can be saved to the database.
     const user: User = this.authRepository.create(userInfo);
-    
+
     // Attach verification token to user.
     await this.authRepository.assignVerificationToken(user);
     
@@ -80,6 +80,10 @@ export class AuthService {
 
     // Get the user associated with the email address.
     const user: User = await this.authRepository.findOneByEmail(email);
+    
+    if (!user) {
+      return false;
+    }
     
     // Attach reset token values to user.
     await this.authRepository.assignResetToken(user);

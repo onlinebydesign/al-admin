@@ -38,8 +38,10 @@ export class AuthController {
   }
 
   @Post('reset')
-  public async reset(@Body() body): Promise<boolean> {
-    return await this.authService.initiatePasswordReset(body.email);
+  public async reset(@Body() body): Promise<Object> {
+    await this.authService.initiatePasswordReset(body.email);
+
+    return {message: 'Request processed'};
   }
 
   // TODO: It would be nice if there was a way to validate the reset token before they start typing the new password.
