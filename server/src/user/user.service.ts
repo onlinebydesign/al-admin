@@ -50,6 +50,8 @@ export class UserService {
       throw new BadRequestException('Invalid user ID');
     }
 
-    return await this.userRepository.delete(user);
+    await this.userRepository.deleteOne({_id: new ObjectID(userId)});
+
+    return;
   }
 }

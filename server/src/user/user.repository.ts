@@ -1,8 +1,8 @@
-import { EntityRepository, Repository, EntityManager, FindManyOptions, DeepPartial } from 'typeorm';
+import { EntityRepository, EntityManager, FindManyOptions, DeepPartial, MongoRepository } from 'typeorm';
 import { User } from '../user/user.entity';
 
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
+export class UserRepository extends MongoRepository<User> {
 
   public async verifyUniqueEmail(email: string): Promise<boolean> {
     return await !this.findOneByEmail(email);

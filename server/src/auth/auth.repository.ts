@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, EntityManager } from 'typeorm';
+import { EntityRepository, EntityManager } from 'typeorm';
 import * as crypto from 'crypto';
 import * as moment from 'moment';
 
