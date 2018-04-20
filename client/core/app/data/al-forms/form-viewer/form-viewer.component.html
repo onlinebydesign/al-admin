@@ -1,0 +1,16 @@
+<div results-table class="card">
+  <div class="card-header">
+    <i class="fa fa-align-justify"></i> {{dataForm.name}} Form
+  </div>
+  <div class="card-body">
+    <al-form [formId]="formId"></al-form>
+
+    <h3>Existing entries</h3>
+    <div *ngFor="let datum of data" class="row">
+      <button class="btn btn-secondary btn-sm col-4" (click)="selectedDatum = datum">{{datum.id}}</button>
+      <div class="col-8" *ngIf="selectedDatum === datum">
+        <al-form [formId]="formId" [dataId]="datum.id" (saved)="selectedDatum = null"></al-form>
+      </div>
+    </div>
+  </div>
+</div>

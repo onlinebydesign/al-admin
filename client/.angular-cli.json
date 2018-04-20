@@ -17,7 +17,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "al",
       "styles": [
-        "scss/style.scss"
+        "scss/style.scss",
+        "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [
         "../node_modules/chart.js/dist/Chart.bundle.min.js",
@@ -37,10 +38,10 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "core/tsconfig.app.json"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "core/tsconfig.spec.json"
     },
     {
       "project": "e2e/tsconfig.e2e.json"

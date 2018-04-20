@@ -1,0 +1,12 @@
+<div results-table class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> {{report.name}} Report
+    </div>
+    <div class="card-body">
+      <h3>Values</h3>
+      <div *ngFor="let datum of data" class="row">
+        <div class="col-4 text-right">{{datum.label}}:</div>
+        <div class="col-8">{{datum.value}}</div>
+      </div>
+    </div>
+  </div>

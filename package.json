@@ -1,31 +1,32 @@
 {
   "name": "al-admin",
   "version": "1.0.0",
-  "main": "server/server.js",
+  "description": "A starting point for building a system to enchance and augment the flow of data in your business.",
+  "main": "server/index.js",
+  "directories": {
+    "doc": "doc"
+  },
   "scripts": {
-    "lint": "eslint .",
-    "start": "node .",
-    "posttest": "npm run lint && nsp check"
-  },
-  "dependencies": {
-    "compression": "^1.7.2",
-    "cors": "^2.8.4",
-    "helmet": "^3.12.0",
-    "loopback-boot": "^2.27.1",
-    "serve-favicon": "^2.4.5",
-    "strong-error-handler": "^2.3.2",
-    "loopback-component-explorer": "^5.3.0",
-    "loopback": "^3.18.2"
-  },
-  "devDependencies": {
-    "eslint": "^4.18.2",
-    "eslint-config-loopback": "^10.0.0",
-    "nsp": "^3.2.1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc.client": "typedoc --target ES6 --module commonjs --exclude \"**/node_modules/**, **/**.spec.ts\" --ignoreCompilerErrors --out doc/client client/core",
+    "doc.server": "typedoc --target ES6 --module commonjs --exclude \"**/node_modules/**\" --ignoreCompilerErrors --out doc/server server"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "git+https://github.com/onlinebydesign/al-admin.git"
   },
-  "license": "UNLICENSED",
-  "description": "al-admin"
+  "keywords": [
+    "Data",
+    "Business",
+    "Logis",
+    "Authentication",
+    "Form",
+    "Report"
+  ],
+  "author": "Online By Design LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onlinebydesign/al-admin/issues"
+  },
+  "homepage": "https://github.com/onlinebydesign/al-admin#readme"
 }

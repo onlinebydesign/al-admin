@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchListComponent } from './search-list.component';
+import { AlTableComponent } from './al-table.component';
 
 describe('SearchListComponent', () => {
-  let component: SearchListComponent;
-  let fixture: ComponentFixture<SearchListComponent>;
+  let component: AlTableComponent;
+  let fixture: ComponentFixture<AlTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchListComponent ]
+      declarations: [ AlTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchListComponent);
+    fixture = TestBed.createComponent(AlTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,7 +8,10 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "paths": {
+      "typeorm": ["../node_modules/typeorm/typeorm-model-shim.js"]
+    }
   },
   "files": [
     "test.ts"

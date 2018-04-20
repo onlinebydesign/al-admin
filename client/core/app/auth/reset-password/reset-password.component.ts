@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'al-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
@@ -13,7 +13,7 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private authService: AuthService) {
     this.route.queryParams.subscribe(params => {
-      this.token = params['access_token'];
+      this.token = params['resetToken'];
     });
   }
 

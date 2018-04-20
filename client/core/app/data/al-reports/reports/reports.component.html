@@ -1,0 +1,20 @@
+<div results-table class="card">
+  <div class="card-header">
+    <i class="fa fa-line-chart"></i> Reports
+  </div>
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-4">
+        <button class="col-12 btn btn-lg btn-primary" routerLinkActive="active" [routerLink]="['reports', 'creator']">New Report</button>
+      </div>
+    </div>
+    <div *ngFor="let report of reports" class="row mb-2">
+      <div class="col">
+        <button class="col-12 btn btn-lg btn-primary" routerLinkActive="active" [routerLink]="['reports', 'editor', report.id]">Edit {{report.name}}</button>
+      </div>
+      <div class="col">
+        <button class="col-12 btn btn-lg btn-success" routerLinkActive="active" [routerLink]="['reports', 'viewer', report.id]">View {{report.name}}</button>
+      </div>
+    </div>
+  </div>
+</div>

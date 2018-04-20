@@ -19,19 +19,19 @@ const APP_CONTAINERS = [
 
 // Import components
 import {
-  AppAside,
-  AppBreadcrumbs,
-  AppFooter,
-  AppHeaderComponent,
-  AppSidebar
+  AsideComponent,
+  BreadcrumbsComponent,
+  FooterComponent,
+  HeaderComponent,
+  SidebarComponent
 } from './components';
 
 const APP_COMPONENTS = [
-  AppAside,
-  AppBreadcrumbs,
-  AppFooter,
-  AppHeaderComponent,
-  AppSidebar
+  AsideComponent,
+  BreadcrumbsComponent,
+  FooterComponent,
+  HeaderComponent,
+  SidebarComponent
 ];
 
 // Import directives
@@ -48,12 +48,12 @@ const APP_DIRECTIVES = [
 ];
 
 // Import routing module
-import {AppRoutingModule} from './app.routing';
+import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
-import {TabsModule} from 'ngx-bootstrap/tabs';
-import {ChartsModule} from 'ng2-charts/ng2-charts';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { SharedModule } from './shared/shared.module';
