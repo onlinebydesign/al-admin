@@ -1,0 +1,32 @@
+{
+  "name": "al-admin",
+  "version": "1.0.0",
+  "description": "A starting point for building a system to enchance and augment the flow of data in your business.",
+  "main": "server/index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc.client": "typedoc --target ES6 --module commonjs --exclude \"**/node_modules/**, **/**.spec.ts\" --ignoreCompilerErrors --out doc/client client/core",
+    "doc.server": "typedoc --target ES6 --module commonjs --exclude \"**/node_modules/**\" --ignoreCompilerErrors --out doc/server server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onlinebydesign/al-admin.git"
+  },
+  "keywords": [
+    "Data",
+    "Business",
+    "Logis",
+    "Authentication",
+    "Form",
+    "Report"
+  ],
+  "author": "Online By Design LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onlinebydesign/al-admin/issues"
+  },
+  "homepage": "https://github.com/onlinebydesign/al-admin#readme"
+}

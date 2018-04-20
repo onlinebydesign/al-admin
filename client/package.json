@@ -12,9 +12,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "doc.client": "typedoc --target ES6 --module commonjs --exclude \"**/node_modules/**, **/**.spec.ts\" --ignoreCompilerErrors --out doc/client client",
-    "doc.server": "typedoc --target ES6 --module commonjs --exclude \"**/node_modules/**\" --ignoreCompilerErrors --out doc/server server"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
