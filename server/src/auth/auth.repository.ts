@@ -62,6 +62,7 @@ export class AuthRepository extends UserRepository {
   }
 
   private authenticateUser(user: User, password: string) {
+    if (!user || !password) return false;
     return user.password === this.hashPassword(user, password) && !user.verificationToken;
   };
 }

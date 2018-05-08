@@ -66,7 +66,6 @@ export class AuthController {
 
   @Post()
   public async create(@Body() user): Promise<User> {
-    console.dir(user);
     return this.authService.create(user);
   }
 

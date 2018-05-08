@@ -5,7 +5,8 @@ import { User } from '../user/user.entity';
 export class UserRepository extends MongoRepository<User> {
 
   public async verifyUniqueEmail(email: string): Promise<boolean> {
-    return await !this.findOneByEmail(email);
+    const user = await this.findOneByEmail(email);
+    return !user;
   }
 
   public async findOneByEmail(email: string): Promise<User> {

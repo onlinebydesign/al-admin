@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/takeWhile';
+import { BehaviorSubject,  Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 import { LoopbackQuery } from '../core/query.class';
 import { UsersCollection } from './users.collection';
@@ -70,7 +69,7 @@ export class UsersService {
       user.destroy({
         success: (returnedUser: User) => {
           this.fetch();
-          this.users$.takeWhile(() => done === false).subscribe(() => {
+          this.users$.pipe(takeWhile(() => done === false)).subscribe(() => {
             if (newSync === false) {
               return newSync = true;
             }
@@ -93,7 +92,7 @@ export class UsersService {
         success: (returnedUser: User) => {
           this.usersCollection.add(returnedUser);
           this.fetch();
-          this.users$.takeWhile(() => done === false).subscribe(() => {
+          this.users$.pipe(takeWhile(() => done === false)).subscribe(() => {
             if (newSync === false) {
               return newSync = true;
             }

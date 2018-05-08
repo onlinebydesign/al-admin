@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import 'rxjs/add/operator/filter';
+import { filter } from 'rxjs/operators';
+
 
 @Component({
   selector: 'al-breadcrumbs',
@@ -20,7 +21,7 @@ export class BreadcrumbsComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event) => {
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event) => {
       this.breadcrumbs = [];
       let currentRoute = this.route.root,
       url = '';

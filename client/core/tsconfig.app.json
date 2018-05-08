@@ -4,7 +4,9 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "baseUrl": "",
-    "types": [],
+    "types": [
+      "lodash"
+    ],
     "paths": {
       "typeorm": ["../node_modules/typeorm/typeorm-model-shim.js"]
     }

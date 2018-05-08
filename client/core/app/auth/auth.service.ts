@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
+import { Observable ,  BehaviorSubject } from 'rxjs';
+
 import { Router } from '@angular/router';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 import { EmptyUser, User, UserModel } from '../users/user.model';
@@ -28,7 +27,7 @@ export class AuthService {
   public loginUrl = '/auth/login';
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
     private router: Router,
     private flashMessageService: FlashMessagesService
   ) {
@@ -50,8 +49,8 @@ export class AuthService {
     // If email and password are provided then login
     if (email && password) {
       this.http.post('api/auth/login', { email: email, password: password })
-        .subscribe((res: Response) => {
-          localStorage.setItem('accessToken', res.text());
+        .subscribe((res: HttpResponse<any>) => {
+          localStorage.setItem('accessToken', JSON.stringify(res));
 
           this.setAccessToken().subscribe(() => {
             this.router.navigate([this.redirectUrl]);
@@ -70,8 +69,8 @@ export class AuthService {
 
     if (accessToken) {
       this.http.post('api/auth/logout', {},
-        { headers: new Headers({ 'Authorization': accessToken.id })})
-        .subscribe((res: Response) =>
+        { headers: new HttpHeaders({ 'Authorization': accessToken.id })})
+        .subscribe((res: HttpResponse<any>) =>
           this.flashMessageService.show(
             'User successfully logged out!',
             { cssClass: 'alert-success', timeout: 2500 }
@@ -93,7 +92,7 @@ export class AuthService {
     try {
       this.user = await this.createUser(email, password);
     } catch (e) {
-      return this.flashMessageService.show(e.json().message, { cssClass: 'alert-danger' });
+      return this.flashMessageService.show(e.message, { cssClass: 'alert-danger' });
     }
 
     this.router.navigate([this.loginUrl]);
@@ -113,7 +112,7 @@ export class AuthService {
     try {
       await this.http.post(`api/auth/reset-password?resetToken=${encodeURIComponent(token)}`, { password: newPassword }).toPromise();
     } catch (e) {
-      return this.flashMessageService.show(e.json().message, { cssClass: 'alert-danger' });
+      return this.flashMessageService.show(e.message, { cssClass: 'alert-danger' });
     }
 
     this.router.navigate([this.loginUrl]);
@@ -138,7 +137,7 @@ export class AuthService {
     // We always give the same reply regardless of the results from the server.
     this.http.post('api/auth/reset',
       { email: email })
-      .subscribe(res => this.recoverReply(res), res => this.recoverReply(res));
+      .subscribe((res: HttpResponse<any>) => this.recoverReply(res), res => this.recoverReply(res));
   }
 
   public verified() {
@@ -165,7 +164,7 @@ export class AuthService {
     return false;
   }
 
-  private recoverReply(res: Response) {
+  private recoverReply(res: HttpResponse<any>) {
     this.router.navigate([this.loginUrl]);
     setTimeout(() =>
       this.flashMessageService.show(

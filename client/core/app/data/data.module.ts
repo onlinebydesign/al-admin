@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { FormsComponent } from './al-forms/forms/forms.component';
 import { FormCreatorComponent } from './al-forms/form-creator/form-creator.component';
@@ -16,16 +17,22 @@ import { DataFormsService } from './al-forms/data-forms.service';
 import { DataReportsService } from './al-reports/data-reports.service';
 import { DataService } from './data.service';
 import { FormComponent } from './al-forms/form/form.component';
-import { DataRoutingModule } from './data.routing.module';
+import { DataRoutingModule } from './data.routing';
+import { AlFormlyRepeatComponent } from './al-formly-repeat/al-formly-repeat.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormlyModule.forRoot(),
+    FormlyModule.forRoot({
+			types: [
+				{ name: 'al-repeated-section', component: AlFormlyRepeatComponent },
+      ],
+    }),
     FormlyBootstrapModule,
     DataRoutingModule,
     FormsModule,
+    TooltipModule.forRoot(),
   ],
   declarations: [
     FormsComponent,
@@ -36,6 +43,7 @@ import { DataRoutingModule } from './data.routing.module';
     ReportViewerComponent,
     DataComponent,
     FormComponent,
+    AlFormlyRepeatComponent,
   ],
   providers: [
     DataGuard,
