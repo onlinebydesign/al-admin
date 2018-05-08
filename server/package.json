@@ -1,7 +1,7 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "al-admin-server",
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Al-Admin Server",
   "license": "MIT",
   "scripts": {
     "start": "node index.js",

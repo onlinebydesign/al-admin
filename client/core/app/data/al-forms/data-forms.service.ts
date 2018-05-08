@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { DataForm } from './data-form';
-import { Observable ,  BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class DataFormsService {

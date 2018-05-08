@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable ,  BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Data } from './data';
