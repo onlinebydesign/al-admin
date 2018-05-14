@@ -10,12 +10,22 @@ import { Token } from './passport/token.interface';
 
 @Component()
 export class AuthService {
+  // We are unable to use normal dependency injection since we are using a custom repository.
   private authRepository: AuthRepository;
 
   constructor(private readonly emailService: EmailService) {
     this.authRepository = getCustomRepository(AuthRepository)
    }
 
+  /**
+   * Creates a JWT using the information from the user object
+   * 
+   * Uses:
+   *   User.id
+   *   User.role
+   * 
+   * @param user Instantiated user object.
+   */
   public createToken(user: User): Token {
     const expiresIn = 60 * 60,
       secretOrKey = process.env.secret;
@@ -27,11 +37,22 @@ export class AuthService {
     };
   }
 
-  async validateUser(signedUser): Promise<boolean> {
-    if (signedUser.id && signedUser.exp > moment().unix())
+  /**
+   * Validate that the JWT is valid.
+   * 
+   * @param signedUser Token object for JWT.
+   */
+  public async validateUser(signedUser: Token): Promise<boolean> {
+    if (signedUser.id && signedUser.expires_in > moment().unix())
     return true;
   }
 
+  /**
+   * Authenticates the user using their email and password then returns a JWT for them to use on the front-end.
+   * 
+   * @param email User's email address
+   * @param password User's unencrypted password
+   */
   public async authenticate(email: string, password: string): Promise<Token> {
     const user = await this.authRepository.authenticate(email, password);
 
@@ -42,7 +63,12 @@ export class AuthService {
     return this.createToken(user);
   }
 
-  public async create(userInfo): Promise<User> {
+  /**
+   * Creates a user and sends the user a verification email.
+   * 
+   * @param userInfo An uninstantiated user or userlike object.
+   */
+  public async create(userInfo: User): Promise<User> {
     if (!userInfo || !userInfo.email) {
       throw new BadRequestException('Email address is required');
     }
@@ -64,15 +90,28 @@ export class AuthService {
     return await this.authRepository.savePassword(user, userInfo.password);
   }
 
+  /**
+   * This is for validating that the user received the email with the verification token.
+   * 
+   * @param token Should match the verification token created with the user.
+   */
   public async verify(token: string): Promise<boolean> {
     return await this.authRepository.verifyToken(token);
   }
 
+  /**
+   *  With JWT you don't invalidate tokens. If in the future we do something about logging out we can add it here.
+   */
   public async loggoutUser() {
-    // With JWT you don't invalidate tokens so if in the future we do something about logging out we can add it here.
     return true;
   }
 
+  /**
+   * Takes an email address and verifies that there is a user with that email and then assigns a reset token to the user
+   * and sends them an email with a link to reset the password.
+   * 
+   * @returns True if we found a user with the email address false otherwise.
+   */
   public async initiatePasswordReset(email: string): Promise<boolean> {
     if (!email) {
       throw new BadRequestException('Email address is required');
@@ -94,6 +133,11 @@ export class AuthService {
     return true;
   }
 
+  /**
+   * Validates that the reset token is valid and that it hasn't expired yet.
+   * 
+   * @param token An email password reset token.
+   */
   public async validateResetToken(token: string): Promise<User> {
     if (!token) {
       throw new BadRequestException('Invalid reset email');
@@ -110,6 +154,12 @@ export class AuthService {
     return user;
   }
 
+  /**
+   * Updates a users password to match the new one provided after validating that the reset token is valid.
+   * 
+   * @param token An email password reset token
+   * @param password The new unencrypted password that will be used.
+   */
   public async resetPassword(token: string, password: string): Promise<User> {
     if (!password) {
       throw new BadRequestException('Password cannot be blank');

@@ -123,7 +123,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L13">auth/auth.service.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L14">auth/auth.service.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -145,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">auth<wbr>Repository<span class="tsd-signature-symbol">:</span> <a href="_auth_auth_repository_.authrepository.html" class="tsd-signature-type">AuthRepository</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L13">auth/auth.service.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L14">auth/auth.service.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -155,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">email<wbr>Service<span class="tsd-signature-symbol">:</span> <a href="_email_email_service_.emailservice.html" class="tsd-signature-type">EmailService</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L15">auth/auth.service.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L16">auth/auth.service.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,16 +172,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L35">auth/auth.service.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L56">auth/auth.service.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Authenticates the user using their email and password then returns a JWT for them to use on the front-end.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>email: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>User&#39;s email address</p>
+									</div>
 								</li>
 								<li>
 									<h5>password: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>User&#39;s unencrypted password</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_auth_passport_token_interface_.token.html" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -192,19 +203,27 @@
 					<a name="create" class="tsd-anchor"></a>
 					<h3>create</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>userInfo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>userInfo<span class="tsd-signature-symbol">: </span><a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L45">auth/auth.service.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L71">auth/auth.service.ts:71</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a user and sends the user a verification email.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>userInfo: <span class="tsd-signature-type">any</span></h5>
+									<h5>userInfo: <a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An uninstantiated user or userlike object.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -221,13 +240,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L19">auth/auth.service.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L29">auth/auth.service.ts:29</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a JWT using the information from the user object</p>
+								</div>
+								<p>Uses:
+									User.id
+								User.role</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>user: <a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Instantiated user object.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_auth_passport_token_interface_.token.html" class="tsd-signature-type">Token</a></h4>
@@ -244,9 +274,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L76">auth/auth.service.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L115">auth/auth.service.ts:115</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes an email address and verifies that there is a user with that email and then assigns a reset token to the user
+									and sends them an email with a link to reset the password.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -254,6 +290,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>True if we found a user with the email address false otherwise.</p>
 						</li>
 					</ul>
 				</section>
@@ -267,9 +304,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L71">auth/auth.service.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L105">auth/auth.service.ts:105</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p> With JWT you don&#39;t invalidate tokens. If in the future we do something about logging out we can add it here.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -284,16 +326,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L113">auth/auth.service.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L163">auth/auth.service.ts:163</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates a users password to match the new one provided after validating that the reset token is valid.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>token: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An email password reset token</p>
+									</div>
 								</li>
 								<li>
 									<h5>password: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The new unencrypted password that will be used.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -310,13 +363,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L97">auth/auth.service.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L141">auth/auth.service.ts:141</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Validates that the reset token is valid and that it hasn&#39;t expired yet.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>token: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An email password reset token.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_user_user_entity_.user.html" class="tsd-signature-type">User</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -327,19 +388,27 @@
 					<a name="validateuser" class="tsd-anchor"></a>
 					<h3>validate<wbr>User</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">validate<wbr>User<span class="tsd-signature-symbol">(</span>signedUser<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">validate<wbr>User<span class="tsd-signature-symbol">(</span>signedUser<span class="tsd-signature-symbol">: </span><a href="../interfaces/_auth_passport_token_interface_.token.html" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L30">auth/auth.service.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L45">auth/auth.service.ts:45</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Validate that the JWT is valid.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>signedUser: <span class="tsd-signature-type">any</span></h5>
+									<h5>signedUser: <a href="../interfaces/_auth_passport_token_interface_.token.html" class="tsd-signature-type">Token</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Token object for JWT.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -356,13 +425,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/9810c28/server/src/auth/auth.service.ts#L67">auth/auth.service.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/onlinebydesign/al-admin/blob/a970791/server/src/auth/auth.service.ts#L98">auth/auth.service.ts:98</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This is for validating that the user received the email with the verification token.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>token: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Should match the verification token created with the user.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
