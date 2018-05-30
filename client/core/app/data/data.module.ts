@@ -25,8 +25,8 @@ import { AlFormlyRepeatComponent } from './al-formly-repeat/al-formly-repeat.com
     CommonModule,
     ReactiveFormsModule,
     FormlyModule.forRoot({
-			types: [
-				{ name: 'al-repeated-section', component: AlFormlyRepeatComponent },
+      types: [
+        { name: 'al-repeated-section', component: AlFormlyRepeatComponent },
       ],
     }),
     FormlyBootstrapModule,
