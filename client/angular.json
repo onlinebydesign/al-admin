@@ -119,6 +119,46 @@
           }
         }
       }
+    },
+    "al-data": {
+      "root": "projects/al-data",
+      "sourceRoot": "projects/al-data/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/al-data/tsconfig.lib.json",
+            "project": "projects/al-data/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/al-data/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/al-data/src/test.ts",
+            "tsConfig": "projects/al-data/tsconfig.spec.json",
+            "karmaConfig": "projects/al-data/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/al-data/tsconfig.lib.json",
+              "projects/al-data/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "coreui-angular",

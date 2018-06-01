@@ -15,6 +15,14 @@
     "lib": [
       "es2016",
       "dom"
-    ]
+    ],
+    "paths": {
+      "al-data": [
+        "dist/al-data"
+      ],
+      "al-data/*": [
+        "dist/al-data/*"
+      ]
+    }
   }
 }
