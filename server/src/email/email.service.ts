@@ -1,9 +1,9 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as Mailgun from 'mailgun-js';
 
 import { User } from '../user/user.entity';
 
-@Component()
+@Injectable()
 export class EmailService {
   private mailgun;
 
@@ -15,7 +15,15 @@ export class EmailService {
   }
 
   public async send(data): Promise<Object> {
-    return await this.mailgun.messages().send(data);
+    let mailgunResponse: Object;
+
+    try {
+      mailgunResponse = await this.mailgun.messages().send(data);
+    } catch (e) {
+      mailgunResponse = new Error('Mailgun failed: ' + e);      
+    }
+
+    return mailgunResponse;
   }
 
   public sendTo(toEmail: string, data): Promise<Object> {

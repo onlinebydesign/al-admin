@@ -6,6 +6,7 @@ import * as express from 'express';
 
 import { ApplicationModule } from './app.module';
 import { HttpExceptionFilter } from './filter/exception.filter';
+import { NotFoundExceptionFilter } from './filter/not-found-exception.filiter';
 
 async function bootstrap() {
   dotenv.config();
@@ -16,14 +17,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Custom filtering
-  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter(), new NotFoundExceptionFilter);
   server.use(express.static('../client/dist/'));
 
   await app.listen(3001);
 
   // If they used an invalid path then serve them the index.html.
-  server.get('*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
-  });
 }
 bootstrap();

@@ -1,16 +1,16 @@
-import { Component, Inject, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getCustomRepository } from 'typeorm';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
+import { InjectRepository, InjectEntityManager } from '@nestjs/typeorm';
+import { Repository, getCustomRepository, EntityManager } from 'typeorm';
 import { ObjectID } from 'mongodb';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
 
-@Component()
+@Injectable()
 export class UserService {
   private userRepository: UserRepository;
 
-  constructor() {
-    this.userRepository = getCustomRepository(UserRepository)
+  constructor(@InjectEntityManager() private entityManager: EntityManager) {
+    this.userRepository = entityManager.getCustomRepository(UserRepository);
   }
 
   public async findAll(): Promise<User[]> {
@@ -23,21 +23,31 @@ export class UserService {
 
   // This would just be used when creating the user as an admin.
   public async create(userInfo): Promise<User> {
-    const user: User = this.userRepository.create(userInfo);
-    this.userRepository.removePrivateData(user);
-    return await this.userRepository.save(user);
+    const users: User[] = this.userRepository.create(userInfo);
+
+    if (users.length > 0) {
+      const user = users[0];
+      this.userRepository.removePrivateData(user);
+      return await this.userRepository.save(user);
+    }
+
+    return null;
   }
 
+  /**
+   * Updates a user from the user JSON object passed in. Returns the full user with the private data removed.
+   * 
+   * @param userId The ID of the user
+   * @param userInfo A JSON object for the user which may or may not have the User ID
+   */
   public async update(userId: string, userInfo: User): Promise<User> {
     if (!userInfo || !userId) {
       throw new BadRequestException('Invalid user data');
     }
 
-    // Not sure if this is needed.
-    userInfo.id = new ObjectID(userId);
+    const user = await this.userRepository.updateOneById(userId, userInfo);
 
-    this.userRepository.removePrivateData(userInfo);
-    return await this.userRepository.save(userInfo);
+    return this.userRepository.removePrivateData(user);
   }
 
   public async delete(userId: string): Promise<void> {

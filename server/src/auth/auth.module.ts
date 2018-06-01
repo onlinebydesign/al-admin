@@ -2,7 +2,7 @@ import * as passport from 'passport';
 import {
   Module,
   NestModule,
-  MiddlewaresConsumer,
+  MiddlewareConsumer,
   RequestMethod,
 } from '@nestjs/common';
 
@@ -13,13 +13,13 @@ import { AuthController } from './auth.controller';
 
 @Module({
   imports: [EmailModule],
-  components: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule implements NestModule {
-  public configure(consumer: MiddlewaresConsumer) {
+  public configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(passport.authenticate('jwt', { session: false }))
-      .forRoutes({ path: '/auth/logout', method: RequestMethod.ALL });
+      .forRoutes('/auth/logout');
   }
 }

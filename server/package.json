@@ -9,30 +9,30 @@
     "start:prod": "node dist/main.js"
   },
   "dependencies": {
-    "@nestjs/common": "^4.3.0",
-    "@nestjs/core": "^4.3.0",
-    "@nestjs/microservices": "^4.3.0",
-    "@nestjs/testing": "^4.3.0",
-    "@nestjs/typeorm": "^2.0.0",
-    "@nestjs/websockets": "^4.3.0",
+    "@nestjs/common": "^5.0.1",
+    "@nestjs/core": "^5.0.1",
+    "@nestjs/microservices": "^5.0.1",
+    "@nestjs/testing": "^5.0.1",
+    "@nestjs/typeorm": "^5.0.0",
+    "@nestjs/websockets": "^5.0.1",
     "dotenv": "^5.0.1",
-    "jsonwebtoken": "^8.0.1",
-    "mailgun-js": "^0.16.0",
-    "moment": "^2.22.1",
-    "mongodb": "^2.2.35",
+    "jsonwebtoken": "^8.2.2",
+    "mailgun-js": "^0.18.0",
+    "moment": "^2.22.2",
+    "mongodb": "^3.1.0-beta4",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "redis": "^2.7.1",
-    "reflect-metadata": "^0.1.10",
-    "rxjs": "^5.5.10",
-    "typeorm": "^0.1.21",
-    "typescript": "^2.4.2"
+    "redis": "^2.8.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.2.0",
+    "typeorm": "^0.2.6",
+    "typescript": "^2.9.1"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/mailgun-js": "^0.16.0",
-    "@types/node": "^9.6.5",
+    "@types/node": "^10.3.0",
     "@types/passport-jwt": "^3.0.1",
-    "ts-node": "^5.0.1"
+    "ts-node": "^6.0.5"
   }
 }

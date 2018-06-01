@@ -30,35 +30,40 @@ export class AuthRepository extends UserRepository {
     user.salt = crypto.randomBytes(16).toString('base64');
     user.password = this.hashPassword(user, password);
     
-    await this.save(user);
+    if (user.id) {
+      await this.updateOneById(user.id, user);
+    } else {
+      await this.save(user);
+    }
 
     this.removePrivateData(user);
 
     return user;
   }
 
-  public async assignVerificationToken(user: User): Promise<User> {
-    user.verificationToken = crypto.randomBytes(60).toString('base64');
-    return await this.save(user);
+  public getVerificationToken(): string {
+    return crypto.randomBytes(60).toString('base64');
   }
 
   public async assignResetToken(user: User): Promise<User> {
     user.resetPasswordToken = crypto.randomBytes(60).toString('base64');
     user.resetPasswordExpires = moment().add(7, 'day').unix();
-    return await this.save(user);
+    await this.updateOneById(user.id, user);
+
+    return user;
   }
 
   public async verifyToken(token): Promise<boolean> {
-    const users = await this.find({select: ['verificationToken'], where: {verificationToken: token}});
-    if (users.length === 0) {
+    const user = await this.findOne({select: ['verificationToken'], where: {verificationToken: token}});
+    if (!user) {
       return false;
     }
 
-    users.forEach((user: User) => {
-      user.verificationToken = null;
-    });
+    user.verificationToken = null;
 
-    return await !!this.save(users);
+    await this.updateOneById(user.id, user);
+
+    return true;
   }
 
   private authenticateUser(user: User, password: string) {

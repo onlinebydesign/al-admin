@@ -1,3 +1,4 @@
+import { ObjectID } from 'mongodb';
 import { EntityRepository, EntityManager, FindManyOptions, DeepPartial, MongoRepository } from 'typeorm';
 import { User } from '../user/user.entity';
 
@@ -18,7 +19,7 @@ export class UserRepository extends MongoRepository<User> {
   }
 
   public async findOneById(id: any, options?: FindManyOptions<User>): Promise<User> {
-    const user = await super.findOneById(id);
+    const user = await this.findById(id);
 
     if (!user) {
       return null;
@@ -30,6 +31,20 @@ export class UserRepository extends MongoRepository<User> {
   public async find(options?: FindManyOptions<User>): Promise<User[]> {
     const users: User[] = await super.find(options);
     return users.map(this.removePrivateData);
+  }
+
+  public async updateOneById(id: string | ObjectID, userInfo: User): Promise<User> {
+
+    // Not sure if this is needed.
+    delete userInfo.id;
+    const databaseUser = await this.findById(id);
+    const user = Object.assign(databaseUser, userInfo);
+
+    return await super.save(user);
+  }
+
+  public findById(id: string | ObjectID): Promise<User> {
+    return super.findOne(id);
   }
 
   // Removes private data from a user.

@@ -226,7 +226,8 @@ export class AuthService {
    */
   private get(): Observable<User> {
     this.user.fetch({
-      success: () => {
+      success: (model, user) => {
+        Object.assign(this.user, user);
         this.userSubject.next(this.user);
       },
       error: (model, res) => {

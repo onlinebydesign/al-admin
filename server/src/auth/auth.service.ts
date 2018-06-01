@@ -1,5 +1,6 @@
-import { Component, Inject, BadRequestException, UnauthorizedException } from '@nestjs/common';
-import { Repository, getCustomRepository } from 'typeorm';
+import { Injectable, Inject, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Repository, getCustomRepository, EntityManager } from 'typeorm';
+import { InjectEntityManager } from '@nestjs/typeorm';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 
@@ -8,13 +9,13 @@ import { AuthRepository } from './auth.repository';
 import { EmailService } from '../email/email.service';
 import { Token } from './passport/token.interface';
 
-@Component()
+@Injectable()
 export class AuthService {
   // We are unable to use normal dependency injection since we are using a custom repository.
   private authRepository: AuthRepository;
 
-  constructor(private readonly emailService: EmailService) {
-    this.authRepository = getCustomRepository(AuthRepository)
+  constructor(private readonly emailService: EmailService, @InjectEntityManager() private entityManager: EntityManager) {
+    this.authRepository = entityManager.getCustomRepository(AuthRepository);
    }
 
   /**
@@ -81,10 +82,10 @@ export class AuthService {
     const user: User = this.authRepository.create(userInfo);
 
     // Attach verification token to user.
-    await this.authRepository.assignVerificationToken(user);
+    user.verificationToken = this.authRepository.getVerificationToken();
     
     // Email the user the email verification token.
-    await this.emailService.sendVerification(user);;
+    await this.emailService.sendVerification(user);
 
     // Save the user and the password.
     return await this.authRepository.savePassword(user, userInfo.password);
