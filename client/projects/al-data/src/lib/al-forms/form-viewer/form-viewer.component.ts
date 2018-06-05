@@ -7,7 +7,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { DataForm } from '../data-form';
 import { DataFormsService } from '../data-forms.service';
 import { Data } from '../../data';
-import { DataService } from '../../data.service';
+import { AlDataService } from '../../al-data.service';
 
 @Component({
   selector: 'al-form-viewer',
@@ -21,11 +21,11 @@ export class FormViewerComponent implements OnInit {
   public data: Data[];
   public selectedDatum: Data;
 
-  private formId: string;
+  public formId: string;
 
   constructor(
     private dataFormsService: DataFormsService,
-    private dataService: DataService,
+    private dataService: AlDataService,
     private flashMessageService: FlashMessagesService,
     private route: ActivatedRoute
   ) { }

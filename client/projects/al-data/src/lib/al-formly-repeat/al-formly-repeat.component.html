@@ -1,5 +1,5 @@
 <div *ngFor="let control of mycontrols; let i = index;" style="position: relative; display: table; width: 100%">
-  <formly-form [fields]="fields(i)" [options]="newOptions" [form]="this.formControl.at(i)" [ngClass]="field.fieldArray.className">
+  <formly-form [fields]="fields(i)" [options]="newOptions" [form]="//this.formControl.at(i)" [ngClass]="field.fieldArray.className">
   </formly-form>
   <div class="btn btn-warn" [tooltip]="to.removeText" placement="below" *ngIf="to.canRemove" (click)="remove(i)" 
        style="position: absolute;top: -15px; right: 0px; background: #f44336; color: #fff; padding: 0px; height: 20px; min-width: 20px; cursor: pointer; line-height: normal;">

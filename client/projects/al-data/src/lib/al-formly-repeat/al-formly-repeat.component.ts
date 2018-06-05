@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { FieldType } from '@ngx-formly/core';
+import { FieldType, FormlyFormOptions } from '@ngx-formly/core';
 import { cloneDeep } from 'lodash';
 
 @Component({
@@ -13,7 +13,7 @@ export class AlFormlyRepeatComponent extends FieldType implements OnInit {
   public sectionsNumber: number = 0;
   public mycontrols: any;
 
-  get newOptions() {
+  get newOptions(): FormlyFormOptions {
     return cloneDeep(this.options);
   }
 
@@ -21,8 +21,8 @@ export class AlFormlyRepeatComponent extends FieldType implements OnInit {
     this.mycontrols = (<any>this.formControl).controls;
     this.sectionsNumber++;
     (<FormArray>this.formControl).push(new FormGroup({}));
-    let fieldGroup = cloneDeep(this.field.fieldArray.fieldGroup);
-    let length = this._fields.push(fieldGroup);
+    const fieldGroup = cloneDeep(this.field.fieldArray.fieldGroup);
+    const length = this._fields.push(fieldGroup);
     this.field.fieldArray.fieldGroup.forEach((campo, i) => {
       this._fields[length - 1][i].templateOptions = campo.templateOptions;
     });
@@ -38,8 +38,8 @@ export class AlFormlyRepeatComponent extends FieldType implements OnInit {
     } else {
       this.model.push({});
     }
-    let fieldGroup = cloneDeep(this.field.fieldArray.fieldGroup);
-    let largo = this._fields.push(fieldGroup);
+    const fieldGroup = cloneDeep(this.field.fieldArray.fieldGroup);
+    const largo = this._fields.push(fieldGroup);
     this.field.fieldArray.fieldGroup.forEach((campo, i) => {
       this._fields[largo - 1][i].templateOptions = campo.templateOptions;
     });

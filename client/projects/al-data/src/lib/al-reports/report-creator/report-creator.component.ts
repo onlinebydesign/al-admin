@@ -100,7 +100,7 @@ export class ReportCreatorComponent implements OnInit {
 
   public updateFullReportForms() {
     // Using the ids from the reportForms array generate an array of forms that have the correct ids.
-    this.fullReportForms = _.filter(this.forms, (form) => this.reportForms.includes(form.id));
+    this.fullReportForms = _.filter(this.forms, (form) => _.includes(this.reportForms, form.id));
 
     // This seems hacky but basically we need to generate an array of the fields that a form has that we key of form.id.
     this.formsFields = {};

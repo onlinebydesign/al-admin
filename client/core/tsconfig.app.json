@@ -3,13 +3,9 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "module": "es2015",
-    "baseUrl": "",
     "types": [
       "lodash"
-    ],
-    "paths": {
-      "typeorm": ["../node_modules/typeorm/typeorm-model-shim.js"]
-    }
+    ]
   },
   "exclude": [
     "test.ts",

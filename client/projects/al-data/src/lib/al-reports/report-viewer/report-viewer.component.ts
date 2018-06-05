@@ -6,7 +6,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Report } from '../report';
 import { DataReportsService } from '../data-reports.service';
 import { Data } from '../../data';
-import { DataService } from '../../data.service';
+import { AlDataService } from '../../al-data.service';
 
 @Component({
   selector: 'al-report-viewer',
@@ -21,7 +21,7 @@ export class ReportViewerComponent implements OnInit {
 
   constructor(
     private dataReportsService: DataReportsService,
-    private dataService: DataService,
+    private dataService: AlDataService,
     private flashMessageService: FlashMessagesService,
     private route: ActivatedRoute
   ) { }

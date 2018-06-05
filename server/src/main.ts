@@ -18,7 +18,7 @@ async function bootstrap() {
 
   // Custom filtering
   app.useGlobalFilters(new HttpExceptionFilter(), new NotFoundExceptionFilter);
-  server.use(express.static('../client/dist/'));
+  server.use(express.static('../client/dist/al-admin'));
 
   await app.listen(3001);
 

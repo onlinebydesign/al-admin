@@ -6,7 +6,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { DataForm } from '../data-form';
 import { DataFormsService } from '../data-forms.service';
 import { Data } from '../../data';
-import { DataService } from '../../data.service';
+import { AlDataService } from '../../al-data.service';
 
 @Component({
   selector: 'al-form',
@@ -26,7 +26,7 @@ export class FormComponent implements OnInit {
 
   constructor(
     private dataFormsService: DataFormsService,
-    private dataService: DataService,
+    private dataService: AlDataService,
     private flashMessageService: FlashMessagesService
   ) { }
 
