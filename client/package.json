@@ -1,10 +1,9 @@
 {
-  "name": "coreui-angular",
-  "version": "1.0.0-alpha.6",
-  "description": "Open Source Bootstrap Admin Template",
+  "name": "al-admin-client",
+  "version": "0.0.1",
+  "description": "Aluminum Starter Stack - client",
   "author": "",
-  "url": "http://coreui.io",
-  "copyright": "Copyright 2017 creativeLabs Łukasz Holeczek",
+  "url": "https://obdstudios.com",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

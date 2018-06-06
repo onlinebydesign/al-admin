@@ -1,6 +1,6 @@
 {
   "name": "al-admin-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Al-Admin Server",
   "license": "MIT",
   "scripts": {
