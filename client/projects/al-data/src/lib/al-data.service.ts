@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { Data } from './data';
 import { ReportData } from './al-reports/report-data';
 import { Report } from './al-reports/report';
+import { DataReportField } from '../../../al-data/src/lib/al-reports/data-report-field';
 
 @Injectable({
   providedIn: 'root'
@@ -54,30 +55,34 @@ export class AlDataService {
 
     const reportData: ReportData[] = [];
     report.fields.forEach(field => {
-      const results: ReportData = {
-        label: field.name,
-        value: null
-      }
-
-      const fieldValues: any[] = data[field.data.id].map(fieldData => fieldData.data[field.fieldId]);
-      switch (field.type) {
-        case 'count':
-          results.value = this.reportCount(fieldValues) + '';
-          break;
-        case 'sum':
-          results.value = this.reportSum(fieldValues) + '';
-          break;
-        case 'concat':
-          results.value = this.reportConcat(fieldValues);
-          break;
-        default:
-          results.value = '';
-      }
-
-      reportData.push(results);
+      reportData.push(this.processField(field, data));
     });
 
     return reportData;
+  }
+
+  private processField(field: DataReportField, data: any) {
+    const results: ReportData = {
+      label: field.name,
+      value: null
+    }
+
+    const fieldValues: any[] = data[field.data.id].map(fieldData => fieldData.data[field.fieldId]);
+    switch (field.type) {
+      case 'count':
+        results.value = this.reportCount(fieldValues) + '';
+        break;
+      case 'sum':
+        results.value = this.reportSum(fieldValues) + '';
+        break;
+      case 'concat':
+        results.value = this.reportConcat(fieldValues);
+        break;
+      default:
+        results.value = '';
+    }
+
+    return results;
   }
 
   private add(data: Data) {
