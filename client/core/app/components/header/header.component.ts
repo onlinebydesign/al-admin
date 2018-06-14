@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 
+import { User } from '../../users/user.model';
+
 @Component({
   selector: 'al-header',
   templateUrl: './header.component.html'
@@ -19,7 +21,7 @@ export class HeaderComponent implements OnInit {
   //   $event.stopPropagation();
   //   this.status.isopen = !this.status.isopen;
   // }
-  public user = {};
+  public user: User;
 
   constructor(private authService: AuthService) {
 
