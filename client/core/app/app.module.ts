@@ -18,7 +18,6 @@ const APP_CONTAINERS = [
 
 // Import components
 import {
-  AsideComponent,
   BreadcrumbsComponent,
   FooterComponent,
   HeaderComponent,
@@ -26,7 +25,6 @@ import {
 } from './components';
 
 const APP_COMPONENTS = [
-  AsideComponent,
   BreadcrumbsComponent,
   FooterComponent,
   HeaderComponent,

@@ -53,14 +53,18 @@ export class FormComponent implements OnInit {
     this.dataService.save(this.data || data);
     this.saved.emit(this.data || data);
 
-    this.flashMessageService.show(
-      'Form Saved',
-      { cssClass: 'alert-info', timeout: 9500 }
-    );
+    if (this.flashMessageService.show) {
+      this.flashMessageService.show(
+        'Form Saved',
+        { cssClass: 'alert-info', timeout: 9500 }
+      );
+    }
 
     setTimeout(() => {
       this.loadData();
     });
+
+    return this.data || data;
   }
 
   private loadData() {
@@ -84,10 +88,12 @@ export class FormComponent implements OnInit {
 
     if (this.dataId) {
       this.data = this.dataService.getById(this.dataId);
-      return this.model = this.data.data;
+      this.model = this.data.data;
+    } else {
+      this.model = {};
     }
 
-    this.model = {};
+    return this.model;
   }
 
 }
