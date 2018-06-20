@@ -56,11 +56,11 @@ describe('FormComponent', () => {
     expect(component.submit(simpleData).data).toBe(simpleData);
   });
 
-  it('should return an empty object from loadData if no for or data has been set', () => {
+  it('should return an empty object from loadData if no data has been set', () => {
     expect((component as any).loadData()).toEqual({});
   });
 
-  it('should return an empty object from loadData if no for or data has been set', () => {
+  it('should return the simpleData object from loadData if thes formId and dataId are set', () => {
     component.formId = simpleData.formId;
     component.dataId = component.submit(simpleData).id
     expect((component as any).loadData()).toEqual(simpleData);
