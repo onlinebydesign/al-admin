@@ -5,15 +5,17 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
-import { EmptyUser, User, UserModel } from '../users/user.model';
+import { EmptyUser, AlUser, AlUserModel } from './al-user.model';
 
-@Injectable()
-export class AuthService {
+@Injectable({
+  providedIn: 'root'
+})
+export class AlAuthService {
 
   // public user = new UserModel();
 
-  private userSubject: BehaviorSubject<User>;
-  public user$: Observable<User>;
+  private userSubject: BehaviorSubject<AlUser>;
+  public user$: Observable<AlUser>;
 
   public user;
 
@@ -31,7 +33,7 @@ export class AuthService {
     private router: Router,
     private flashMessageService: FlashMessagesService
   ) {
-    this.userSubject = new BehaviorSubject<User>(EmptyUser);
+    this.userSubject = new BehaviorSubject<AlUser>(EmptyUser);
     this.user$ = this.userSubject.asObservable();
 
     this.setAccessToken();
@@ -39,10 +41,6 @@ export class AuthService {
 
   /**
    * Login and load the user
-   *
-   * @param {string} email
-   * @param {string} password
-   * @returns {any}
    */
   public login(email: string, password: string) {
 
@@ -126,8 +124,6 @@ export class AuthService {
 
   /**
    * Checks to see if the user is logged in.
-   *
-   * @returns {boolean}
    */
   public isLoggedIn(): boolean {
     return !!this.accessToken;
@@ -176,16 +172,14 @@ export class AuthService {
 
   /**
    * Take the access token from localStorage and attach the token and user id to the user.
-   *
-   * @returns {Observable<User>}
    */
-  private setAccessToken(): Observable<User> {
+  private setAccessToken(): Observable<AlUser> {
     this.accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
     // If there is an accessToken then load the user
     if (this.accessToken && this.accessToken.userId && this.accessToken.id) {
       if (!this.user) {
-        this.user = new UserModel();
+        this.user = new AlUserModel();
       }
 
       this.user.id = this.accessToken.userId;
@@ -205,8 +199,6 @@ export class AuthService {
 
   /**
    * Remove the access token from local storage and remove user.
-   *
-   * @returns {Observable<User>}
    */
   private unsetAccessToken(): void {
     // Delete the local user.
@@ -221,10 +213,8 @@ export class AuthService {
 
   /**
    * Fetches the user and returns the user observable
-   *
-   * @returns {Observable<User>}
    */
-  private get(): Observable<User> {
+  private get(): Observable<AlUser> {
     this.user.fetch({
       success: (model, user) => {
         Object.assign(this.user, user);
@@ -245,9 +235,9 @@ export class AuthService {
     return this.user$;
   }
 
-  private async createUser(email: string, password: string): Promise<User> {
+  private async createUser(email: string, password: string): Promise<AlUser> {
     const response = await this.http.post('api/auth', { email: email, password: password }).toPromise();
-    return new UserModel(response);
+    return new AlUserModel(response);
   }
 
 }

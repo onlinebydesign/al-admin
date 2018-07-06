@@ -22,6 +22,12 @@
       ],
       "al-data/*": [
         "dist/al-data/*"
+      ],
+      "al-core": [
+        "dist/al-core"
+      ],
+      "al-core/*": [
+        "dist/al-core/*"
       ]
     }
   }

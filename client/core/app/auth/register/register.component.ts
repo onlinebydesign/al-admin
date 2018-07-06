@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from './../auth.service';
+import { AlAuthService } from 'al-core';
 
 @Component({
   selector: 'al-register',
@@ -9,7 +9,7 @@ import { AuthService } from './../auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AlAuthService) {}
 
   public register(email: string, password: string, passwordConfirm: string) {
     this.authService.register(email, password, passwordConfirm);

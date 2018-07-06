@@ -17,10 +17,10 @@
     </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
-    <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
+    <li class="nav-item dropdown" dropdown>
       <a href class="nav-link dropdown-toggle" dropdownToggle (click)="false">
         <img src="" class="img-avatar" alt="">
-        <i class="fa fa-user-o" style="margin-right: 20px;"></i> 
+        <i class="fa fa-user-o" style="margin-right: 20px;"></i>
         <span class="d-md-down-none" style="margin-right: 20px;">{{user.firstName}} {{user.lastName}}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">

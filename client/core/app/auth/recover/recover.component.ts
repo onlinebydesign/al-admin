@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from '../auth.service';
+import { AlAuthService } from 'al-core';
 
 @Component({
   selector: 'al-recover',
@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class RecoverComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    private authService: AlAuthService,
   ) {}
 
   public ngOnInit() {

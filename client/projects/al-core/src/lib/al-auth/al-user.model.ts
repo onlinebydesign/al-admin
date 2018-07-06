@@ -1,7 +1,7 @@
 import * as Model from 'ampersand-model';
 import * as _ from 'lodash';
 
-export const UserModel = Model.extend({
+export const AlUserModel = Model.extend.bind(Model)({
   urlRoot: '/api/user',
   props: {
     id: 'any',
@@ -24,7 +24,7 @@ export const UserModel = Model.extend({
 });
 
 
-export class User {
+export class AlUser {
   id: string|number;
   email: string;
   emailVerified: boolean;
@@ -37,7 +37,7 @@ export class User {
   destroy?: any;
 }
 
-export const EmptyUser: User = {
+export const EmptyUser: AlUser = {
   id: 0,
   email: '',
   emailVerified: false,

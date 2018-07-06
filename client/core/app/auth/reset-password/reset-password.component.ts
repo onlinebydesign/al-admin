@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../auth.service';
+import { AlAuthService } from 'al-core';
 
 @Component({
   selector: 'al-reset-password',
@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 export class ResetPasswordComponent implements OnInit {
   private token: string;
 
-  constructor(private route: ActivatedRoute, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private authService: AlAuthService) {
     this.route.queryParams.subscribe(params => {
       this.token = params['resetToken'];
     });

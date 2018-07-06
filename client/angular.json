@@ -159,6 +159,46 @@
           }
         }
       }
+    },
+    "al-core": {
+      "root": "projects/al-core",
+      "sourceRoot": "projects/al-core/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/al-core/tsconfig.lib.json",
+            "project": "projects/al-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/al-core/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/al-core/src/test.ts",
+            "tsConfig": "projects/al-core/tsconfig.spec.json",
+            "karmaConfig": "projects/al-core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/al-core/tsconfig.lib.json",
+              "projects/al-core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "al-admin",

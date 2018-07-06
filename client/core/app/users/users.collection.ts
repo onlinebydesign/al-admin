@@ -1,10 +1,10 @@
 import * as Collection from 'ampersand-rest-collection';
 import * as _ from 'lodash';
 
-import { UserModel } from './user.model';
+import { AlUserModel } from 'al-core';
 
 export const UsersCollection = Collection.extend({
-    model: UserModel,
+    model: AlUserModel,
     url: function() {
         if (this.queryFilter) {
             return 'api/user?filter=' + JSON.stringify(this.queryFilter);

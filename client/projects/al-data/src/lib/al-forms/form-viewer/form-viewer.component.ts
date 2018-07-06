@@ -43,11 +43,11 @@ export class FormViewerComponent implements OnInit {
     this.dataService.data$.subscribe(() => this.data = this.dataService.getByFormId(this.formId));
   }
 
-  private loadData() {
+  private async loadData() {
     if (this.formId) {
       try {
         // We have to clone this so that ngx-formly doesn't mess with the the fields.
-        this.dataForm = JSON.parse(JSON.stringify(this.dataFormsService.getById(this.formId)));
+        this.dataForm = JSON.parse(JSON.stringify(await this.dataFormsService.getById(this.formId)));
       } catch (e) {}
     }
 

@@ -10,7 +10,12 @@ export interface LoopbackFilter {
 }
 
 export class LoopbackQuery implements LoopbackFilter {
-  public where;
+  public where: any;
+  public limit: number;
+  public skip: number;
+  public fields: any;
+  public order: string;
+  public include: any;
 
   constructor(filter?: LoopbackFilter) {
     if (filter) {
@@ -29,13 +34,13 @@ export class LoopbackQuery implements LoopbackFilter {
 
     node = _.isObject(node) ? _.cloneDeep(node) : {};
 
-    const recursive = (node) => {
+    const recursive = (outerNode) => {
       // First we traverse down array/object branches
-      _.forOwn(node, (value, key, object) => {
+      _.forOwn(outerNode, (value, key, object) => {
         if (_.isArray(value)) {
-          _.forEach(value, (node, index, collection) => {
-            if (_.isObject(node)) {
-              collection[index] = recursive(node);
+          _.forEach(value, (innerNode, index, collection) => {
+            if (_.isObject(innerNode)) {
+              collection[index] = recursive(innerNode);
             }
           });
         } else if (_.isObject(value)) {
@@ -45,9 +50,18 @@ export class LoopbackQuery implements LoopbackFilter {
 
       // Remove all empty properties in this node
       return _.omitBy(node, (value, key) => {
-        if (_.isBoolean(value)) return false;
-        if (_.isNumber(value)) return false;
-        if (_.isDate(value)) return false;
+        if (_.isBoolean(value)) {
+          return false;
+        }
+
+        if (_.isNumber(value)) {
+          return false;
+        }
+
+        if (_.isDate(value)) {
+          return false;
+        }
+
         return _.isEmpty(value);
       });
     };

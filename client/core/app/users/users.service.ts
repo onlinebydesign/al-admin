@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject,  Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
-import { LoopbackQuery } from '../core/query.class';
+import { AlUser, AlUserModel, LoopbackQuery } from 'al-core';
+
 import { UsersCollection } from './users.collection';
-import { EmptyUser, User, UserModel } from './user.model';
 
 
 @Injectable()
 export class UsersService {
-  public users$: Observable<User[]>;
-  public usersSubject: BehaviorSubject<User[]>;
+  public users$: Observable<AlUser[]>;
+  public usersSubject: BehaviorSubject<AlUser[]>;
 
   private usersCollection: any; // TODO: change to Al-Model
   private queryFilter: LoopbackQuery;
 
   constructor() {
-    this.usersSubject = new BehaviorSubject<User[]>([]);
+    this.usersSubject = new BehaviorSubject<AlUser[]>([]);
     this.users$ = this.usersSubject.asObservable();
 
     this.usersCollection = new UsersCollection();
@@ -49,11 +49,11 @@ export class UsersService {
     });
   }
 
-  public save(user: User): Observable<User> {
+  public save(user: AlUser): Observable<AlUser> {
     return Observable.create((observer) => {
       user.save(null, {
         patch: true,
-        success: (returnedUser: User) => {
+        success: (returnedUser: AlUser) => {
           observer.next(returnedUser);
           observer.complete();
         }
@@ -61,13 +61,13 @@ export class UsersService {
     })
   }
 
-  public delete(user: User): Observable<User> {
+  public delete(user: AlUser): Observable<AlUser> {
     return Observable.create((observer) => {
       let done = false;
       let newSync = false;
 
       user.destroy({
-        success: (returnedUser: User) => {
+        success: (returnedUser: AlUser) => {
           this.fetch();
           this.users$.pipe(takeWhile(() => done === false)).subscribe(() => {
             if (newSync === false) {
@@ -83,13 +83,13 @@ export class UsersService {
     })
   }
 
-  public add(email: string, password: string): Observable<User> {
+  public add(email: string, password: string): Observable<AlUser> {
     return Observable.create((observer) => {
       let done = false;
       let newSync = false;
-      const user = new UserModel({email: email, password: password});
+      const user = new AlUserModel({email: email, password: password});
       user.save(null, {
-        success: (returnedUser: User) => {
+        success: (returnedUser: AlUser) => {
           this.usersCollection.add(returnedUser);
           this.fetch();
           this.users$.pipe(takeWhile(() => done === false)).subscribe(() => {

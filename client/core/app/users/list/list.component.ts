@@ -1,12 +1,12 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
-import { LoopbackQuery } from '../../core/query.class';
+import { LoopbackQuery, AlUser } from 'al-core';
+
 import { UsersService } from '../users.service';
-import { User } from '../user.model';
 
 @Component({
-  selector: 'app-list',
+  selector: 'al-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -17,9 +17,9 @@ export class ListComponent implements OnInit {
     skip: 0,
     fields: {},
   });
-  public users: User[] = [];
-  public displayedUsers: User[] = [];
-  public selected: User;
+  public users: AlUser[] = [];
+  public displayedUsers: AlUser[] = [];
+  public selected: AlUser;
   public searchColumns = [
     'firstName',
     'lastName',
@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
   private modalRef: BsModalRef;
 
   constructor(private usersService: UsersService, private modalService: BsModalService) {
-    this.usersService.users$.subscribe((users: User[]) => {
+    this.usersService.users$.subscribe((users: AlUser[]) => {
       this.users = [];
       setTimeout(() => this.users = users);
     });
@@ -45,7 +45,7 @@ export class ListComponent implements OnInit {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
-  public updateDisplayed(users: User[]) {
+  public updateDisplayed(users: AlUser[]) {
     this.displayedUsers.length = 0;
     this.displayedUsers.push(...users);
   }
@@ -57,11 +57,11 @@ export class ListComponent implements OnInit {
     });
   }
 
-  public save(user: User) {
+  public save(user: AlUser) {
     this.usersService.save(user).subscribe(() => this.removeSelection());
   }
 
-  public delete(user: User) {
+  public delete(user: AlUser) {
     this.usersService.delete(user).subscribe(() => this.removeSelection());
   }
 

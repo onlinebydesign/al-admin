@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from './auth/auth.service';
+import { AlAuthService } from 'al-core';
 
 @Component({
   // tslint:disable-next-line
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   private loginUrl = '/auth/login';
   private authUrl = '/auth/';
 
-  constructor (private authService: AuthService, private router: Router) { }
+  constructor (private authService: AlAuthService, private router: Router) { }
 
   ngOnInit() {
     // Redirect if not logged in and not on the login or register pages.

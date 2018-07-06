@@ -21,7 +21,7 @@ export class AlDataService {
     this.data$ = this.dataSubject.asObservable();
   }
 
-  public getById(id: string): Data {
+  public async getById(id: string): Promise<Data> {
     let foundData: Data;
 
     this.data.forEach((datum) => {
@@ -30,6 +30,10 @@ export class AlDataService {
       }
     });
 
+    if (foundData) {
+      return foundData;
+    }
+
     return foundData;
   }
 
@@ -37,8 +41,8 @@ export class AlDataService {
     return _.filter(this.data, {formId: formId});
   }
 
-  public save(data: Data) {
-    const existingData = this.getById(data.id);
+  public async save(data: Data) {
+    const existingData = await this.getById(data.id);
 
     if (!existingData) {
       return this.add(data);
@@ -46,6 +50,8 @@ export class AlDataService {
 
     existingData.data = data.data;
     existingData.formVersion = data.formVersion;
+
+    // TODO: send updated data to the server
   }
 
   public generateReport(report: Report): ReportData[] {

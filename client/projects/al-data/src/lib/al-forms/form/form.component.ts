@@ -67,7 +67,7 @@ export class FormComponent implements OnInit {
     return this.data || data;
   }
 
-  private loadData() {
+  private async loadData() {
     if (this.formId) {
       try {
         // We have to clone this so that ngx-formly doesn't mess with the the fields.
@@ -87,7 +87,7 @@ export class FormComponent implements OnInit {
     this.form = new FormGroup({});
 
     if (this.dataId) {
-      this.data = this.dataService.getById(this.dataId);
+      this.data = await this.dataService.getById(this.dataId);
       this.model = this.data.data;
     } else {
       this.model = {};
