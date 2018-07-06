@@ -1,5 +1,5 @@
 export interface Token {
-  expires_in: number;
+  exp: number;
   id: string;
   userId: string|Object;
 }

@@ -13,8 +13,13 @@ export class UserService {
     this.userRepository = entityManager.getCustomRepository(UserRepository);
   }
 
-  public async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  public async findAll(where): Promise<User[]> {
+    let query;
+    if (where) {
+      query = {where};
+    }
+    
+    return await this.userRepository.find(query);
   }
 
   public async find(id): Promise<User> {

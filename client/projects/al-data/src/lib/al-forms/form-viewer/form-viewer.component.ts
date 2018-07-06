@@ -40,7 +40,9 @@ export class FormViewerComponent implements OnInit {
     });
 
     // TODO: There should be an observable for the formId of data instead of for the entire collection.
-    this.dataService.data$.subscribe(() => this.data = this.dataService.getByFormId(this.formId));
+    this.dataService.data$.subscribe(() => {
+      this.dataService.getByFormId(this.formId).then(data => this.data = data);
+    });
   }
 
   private async loadData() {

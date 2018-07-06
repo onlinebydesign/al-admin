@@ -32,7 +32,7 @@ export class AuthService {
       secretOrKey = process.env.secret;
     const token = jwt.sign({id: user.id, role: user.role}, secretOrKey, { expiresIn });
     return {
-      expires_in: expiresIn,
+      exp: expiresIn,
       id: token,
       userId: user.id
     };
@@ -44,8 +44,7 @@ export class AuthService {
    * @param signedUser Token object for JWT.
    */
   public async validateUser(signedUser: Token): Promise<boolean> {
-    if (signedUser.id && signedUser.expires_in > moment().unix())
-    return true;
+    return signedUser.id && signedUser.exp > moment().unix();
   }
 
   /**

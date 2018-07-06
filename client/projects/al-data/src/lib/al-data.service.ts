@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Data } from './data';
 import { ReportData } from './al-reports/report-data';
 import { Report } from './al-reports/report';
-import { DataReportField } from '../../../al-data/src/lib/al-reports/data-report-field';
+import { DataReportField } from './al-reports/data-report-field';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AlDataService {
 
   private data: Data[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.dataSubject = new BehaviorSubject<Data[]>(this.data);
     this.data$ = this.dataSubject.asObservable();
   }
@@ -34,24 +35,39 @@ export class AlDataService {
       return foundData;
     }
 
-    return foundData;
+    return this.http.get(`api/data/${id}`).toPromise().then((res: HttpResponse<any>): Data => res.body);
   }
 
-  public getByFormId(formId: string): Data[] {
-    return _.filter(this.data, {formId: formId});
-  }
+  /**
+   * If there are any data values for the form then return those else check
+   * for them on the server.
+   */
+  public async getByFormId(formId: string): Promise<Data[]> {
+    const formData = _.filter(this.data, {formId: formId});
 
-  public async save(data: Data) {
-    const existingData = await this.getById(data.id);
-
-    if (!existingData) {
-      return this.add(data);
+    if (formData) {
+      return formData;
     }
 
-    existingData.data = data.data;
-    existingData.formVersion = data.formVersion;
+    return this.http.get(`api/data?formId=${formId}`).toPromise().then((res: HttpResponse<any>): Data[] => res.body);
+  }
 
-    // TODO: send updated data to the server
+  public async save(data: Data): Promise<Data> {
+    let existingData;
+    if (data.id) {
+      existingData = await this.getById(data.id);
+
+      existingData.data = data.data;
+      existingData.formVersion = data.formVersion;
+    }
+
+    const resData = await this.send(existingData || data);
+
+    if (!existingData) {
+      this.add(resData);
+    }
+
+    return resData;
   }
 
   public generateReport(report: Report): ReportData[] {
@@ -65,6 +81,10 @@ export class AlDataService {
     });
 
     return reportData;
+  }
+
+  private send(data: Data): Promise<Data> {
+    return this.http.post('api/data', data).toPromise().then((res: HttpResponse<any>): Data => res.body);
   }
 
   private processField(field: DataReportField, data: any) {
@@ -91,13 +111,10 @@ export class AlDataService {
     return results;
   }
 
-  private add(data: Data) {
-
-    // Add the created value with the current date.
-    data.created = new Date();
-
+  private add(data: Data): Data {
     this.data.push(data);
     this.dataSubject.next(this.data);
+    return data;
   }
 
   private reportCount(values: any[]): number {

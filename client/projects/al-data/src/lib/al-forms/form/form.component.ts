@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 import { DataForm } from '../data-form';
@@ -35,22 +34,20 @@ export class FormComponent implements OnInit {
     this.loadData();
   }
 
-  public submit(model) {
+  public async submit(model) {
     let data: Data;
 
     if (this.data) {
       this.data.data = model;
     } else {
       data = {
-        id: Math.random() + '',
         formId: this.dataForm.id,
         formVersion: this.dataForm.version,
         data: model,
-        created: null
       }
     }
 
-    this.dataService.save(this.data || data);
+    await this.dataService.save(this.data || data);
     this.saved.emit(this.data || data);
 
     if (this.flashMessageService.show) {
