@@ -16,6 +16,7 @@ export class AlDataService {
   public dataSubject: BehaviorSubject<Data[]>;
 
   private data: Data[] = [];
+  private promises: any = {};
 
   constructor(private http: HttpClient) {
     this.dataSubject = new BehaviorSubject<Data[]>(this.data);
@@ -35,7 +36,16 @@ export class AlDataService {
       return foundData;
     }
 
-    return this.http.get(`api/data/${id}`).toPromise().then((res: HttpResponse<any>): Data => res.body);
+    // Cache request
+    const promiseName = 'dataId' + id;
+    if (this.promises[promiseName]) {
+      return this.promises[promiseName];
+    }
+
+    const promise = this.promises[promiseName] = this.http.get(`api/data/${id}`).toPromise().then((res: Data) => {
+      return this.add(res);
+    });
+    return promise;
   }
 
   /**
@@ -45,11 +55,20 @@ export class AlDataService {
   public async getByFormId(formId: string): Promise<Data[]> {
     const formData = _.filter(this.data, {formId: formId});
 
-    if (formData) {
+    if (formData.length > 0) {
       return formData;
     }
 
-    return this.http.get(`api/data?formId=${formId}`).toPromise().then((res: HttpResponse<any>): Data[] => res.body);
+    // Cache request
+    const promiseName = 'formId' + formId;
+    if (this.promises[promiseName]) {
+      return this.promises[promiseName];
+    }
+
+    const promise = this.promises[promiseName] = this.http.get(`api/data?formId=${formId}`).toPromise().then((res: Data[]) => {
+      return this.addAll(res);
+    });
+    return promise;
   }
 
   public async save(data: Data): Promise<Data> {
@@ -84,7 +103,7 @@ export class AlDataService {
   }
 
   private send(data: Data): Promise<Data> {
-    return this.http.post('api/data', data).toPromise().then((res: HttpResponse<any>): Data => res.body);
+    return this.http.post('api/data', data).toPromise().then((res: Data) => res);
   }
 
   private processField(field: DataReportField, data: any) {
@@ -113,6 +132,12 @@ export class AlDataService {
 
   private add(data: Data): Data {
     this.data.push(data);
+    this.dataSubject.next(this.data);
+    return data;
+  }
+
+  private addAll(data: Data[]): Data[] {
+    this.data.push(...data);
     this.dataSubject.next(this.data);
     return data;
   }

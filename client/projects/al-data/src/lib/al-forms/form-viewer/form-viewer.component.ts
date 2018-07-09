@@ -36,16 +36,14 @@ export class FormViewerComponent implements OnInit {
     .subscribe((params: Params) => {
       this.formId = params['id'];
 
-      this.loadData();
+      this.loadForm();
     });
 
     // TODO: There should be an observable for the formId of data instead of for the entire collection.
-    this.dataService.data$.subscribe(() => {
-      this.dataService.getByFormId(this.formId).then(data => this.data = data);
-    });
+    this.dataService.data$.subscribe(() => this.loadData());
   }
 
-  private async loadData() {
+  private async loadForm() {
     if (this.formId) {
       try {
         // We have to clone this so that ngx-formly doesn't mess with the the fields.
@@ -64,6 +62,11 @@ export class FormViewerComponent implements OnInit {
 
     this.model = {};
     this.form = new FormGroup({});
+    this.loadData();
+  }
+
+  private async loadData() {
+      this.data = await this.dataService.getByFormId(this.formId);
   }
 
 }

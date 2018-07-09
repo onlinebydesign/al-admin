@@ -8,8 +8,8 @@ export class DataController {
   constructor(private readonly dataService: DataService) {}
 
   @Get()
-  public findAll(@Query() formId?: string): Promise<Data[]> {
-    return this.dataService.findAll({formId});
+  public findAll(@Query() query?: any): Promise<Data[]> {
+    return this.dataService.findAll(query);
   }
 
   @Get(':id')
