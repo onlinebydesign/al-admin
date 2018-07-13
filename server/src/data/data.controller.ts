@@ -19,8 +19,8 @@ export class DataController {
 
   @Patch(':id')
   @Put(':id')
-  public update(@Param() params, @Body() user): Promise<Data> {
-    return this.dataService.update(params.id, user);
+  public update(@Param() params, @Body() data): Promise<Data> {
+    return this.dataService.update(params.id, data);
   }
 
   @Delete(':id')
@@ -30,9 +30,16 @@ export class DataController {
 
   @Post()
   public async create(@Body() data): Promise<Data | Data[]> {
-    console.dir(data);
     const response = await this.dataService.create(data);
-    console.dir(response);
     return response;
   }
+
+  @Put()
+  public async updateAll(@Body() data: Data[]): Promise<Data[]> {
+    if (!data || data.length === 0 || !Array.isArray(data)) return;
+
+    const updatePromises: Promise<Data>[] = data.map(row => this.dataService.update(row.id, row))
+    return await Promise.all(updatePromises);
+  }
+
 }

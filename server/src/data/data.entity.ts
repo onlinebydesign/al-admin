@@ -7,6 +7,8 @@ export class Data {
   @Column() formId: string;
   @Column() formVersion: number;
 
+  @Column() position: number;
+
   @Column('json') data: any;
 
   // Generic fields for all models

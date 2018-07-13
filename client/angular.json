@@ -21,7 +21,8 @@
             ],
             "styles": [
               "core/scss/style.scss",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/dragula/dist/dragula.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.bundle.min.js",

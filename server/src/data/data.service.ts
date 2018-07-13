@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager } from 'typeorm';
+import { EntityManager, FindManyOptions } from 'typeorm';
 import { ObjectID } from 'mongodb';
 import { Data } from './data.entity';
 import { DataRepository } from './data.repository';
@@ -14,12 +14,14 @@ export class DataService {
   }
 
   public async findAll(where): Promise<Data[]> {
-    let query;
-    if (where) {
-      query = {where};
-    }
+    const query = {
+      where: where,
+      order: {
+        position: 1
+      }
+    };
     
-    return await this.dataRepository.find(query);
+    return await this.dataRepository.find((query as FindManyOptions<Data>));
   }
 
   public async find(id): Promise<Data> {
@@ -36,7 +38,7 @@ export class DataService {
    * @param dataId The ID of the user
    * @param dataInfo A JSON object for the user which may or may not have the User ID
    */
-  public async update(dataId: string, dataInfo: Data): Promise<Data> {
+  public async update(dataId: string | ObjectID, dataInfo: Data): Promise<Data> {
     if (!dataInfo || !dataId) {
       throw new BadRequestException('Invalid data');
     }

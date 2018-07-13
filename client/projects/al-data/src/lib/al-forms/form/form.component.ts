@@ -44,6 +44,7 @@ export class FormComponent implements OnInit {
         formId: this.dataForm.id,
         formVersion: this.dataForm.version,
         data: model,
+        position: null
       }
     }
 

@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { DragulaModule } from 'ng2-dragula';
 
 import { FormsComponent } from './al-forms/forms/forms.component';
 import { FormCreatorComponent } from './al-forms/form-creator/form-creator.component';
@@ -32,6 +33,7 @@ import { AlFormlyRepeatComponent } from './al-formly-repeat/al-formly-repeat.com
     FormlyBootstrapModule,
     FormsModule,
     TooltipModule.forRoot(),
+    DragulaModule
   ],
   declarations: [
     FormsComponent,

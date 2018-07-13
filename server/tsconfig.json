@@ -3,6 +3,8 @@
     "module": "commonjs",
     "declaration": false,
     "noImplicitAny": false,
+    "noStrictGenericChecks": true,
+    "skipLibCheck": true,
     "removeComments": true,
     "noLib": false,
     "emitDecoratorMetadata": true,

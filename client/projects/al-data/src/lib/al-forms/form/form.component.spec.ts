@@ -11,6 +11,7 @@ const simpleData = {
   id: 'string',
   formId: 'formString',
   formVersion: 1,
+  position: 0,
   data: {
     data: 'data',
     toSum: 1,
@@ -53,7 +54,9 @@ describe('FormComponent', () => {
   });
 
   it('should return the data included as a data property when submit is called', () => {
-    expect(component.submit(simpleData).data).toBe(simpleData);
+    component.submit(simpleData).then(data => {
+      expect(data.data).toBe(simpleData);
+    });
   });
 
   it('should return an empty object from loadData if no data has been set', () => {
@@ -62,8 +65,10 @@ describe('FormComponent', () => {
 
   it('should return the simpleData object from loadData if thes formId and dataId are set', () => {
     component.formId = simpleData.formId;
-    component.dataId = component.submit(simpleData).id
-    expect((component as any).loadData()).toEqual(simpleData);
+    component.submit(simpleData).then(data => {
+      component.dataId = data.id
+      expect((component as any).loadData()).toEqual(simpleData);
+    });
   });
 
 });

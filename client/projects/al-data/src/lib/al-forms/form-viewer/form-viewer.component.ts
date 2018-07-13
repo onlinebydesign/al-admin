@@ -8,6 +8,7 @@ import { DataForm } from '../data-form';
 import { DataFormsService } from '../data-forms.service';
 import { Data } from '../../data';
 import { AlDataService } from '../../al-data.service';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'al-form-viewer',
@@ -18,7 +19,19 @@ export class FormViewerComponent implements OnInit {
   public dataForm: DataForm;
   public form: FormGroup;
   public model: any;
-  public data: Data[];
+
+  private dataProxy = {
+    // Watch for changes to the array. Updates the position value to match the array position.
+    set: (target: Data[], property: string, value: Data) => {
+      if (property !== 'length') {
+        value.position = Number(property);
+      }
+      target[property] = value;
+      return true;
+    }
+  };
+  public data: Data[] = new Proxy([], this.dataProxy);
+
   public selectedDatum: Data;
 
   public formId: string;
@@ -27,8 +40,11 @@ export class FormViewerComponent implements OnInit {
     private dataFormsService: DataFormsService,
     private dataService: AlDataService,
     private flashMessageService: FlashMessagesService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private dragulaService: DragulaService
+  ) {
+    dragulaService.drop.subscribe(value => this.onDragDrop());
+  }
 
   ngOnInit() {
     // Get the form from the form service if an form id is passed in.
@@ -66,7 +82,12 @@ export class FormViewerComponent implements OnInit {
   }
 
   private async loadData() {
-      this.data = await this.dataService.getByFormId(this.formId);
+    const data = await this.dataService.getByFormId(this.formId);
+    this.data.length = 0;
+    this.data.push(...data);
   }
 
+  private onDragDrop() {
+    this.dataService.update(this.data)
+  }
 }

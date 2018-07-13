@@ -89,6 +89,13 @@ export class AlDataService {
     return resData;
   }
 
+  /**
+   * This function takes an array of data and saves it to the server.
+   */
+  public async update(data: Data[]): Promise<Data[]> {
+    return this.http.put('api/data', data).toPromise().then((res: Data[]) => res);
+  }
+
   public generateReport(report: Report): ReportData[] {
     // Add the data for each form to the data[][] arrays
     const data = {};

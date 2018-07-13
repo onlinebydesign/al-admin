@@ -4,4 +4,5 @@ export interface Data {
   formVersion: number;
   data: any;
   created?: Date;
+  position: number;
 }
