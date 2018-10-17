@@ -1,6 +1,6 @@
 {
   "name": "al-admin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A starting point for building a system to enchance and augment the flow of data in your business.",
   "main": "server/index.js",
   "directories": {
